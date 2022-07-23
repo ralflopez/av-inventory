@@ -1,26 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "@fontsource/roboto/300.css"
+import "@fontsource/roboto/400.css"
+import "@fontsource/roboto/500.css"
+import "@fontsource/roboto/700.css"
+import Box from "@mui/material/Box"
+import CssBaseline from "@mui/material/CssBaseline"
+import { useState } from "react"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { MainAppBar } from "./components/Layout/MainAppBar"
+import { WithdrawPage } from "./components/Withdraw/WithdrawPage"
 
-function App() {
+export default function ResponsiveDrawer() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
+        <MainAppBar />
+        {/* body */}
+        <Routes>
+          <Route path='/withdraw' element={<WithdrawPage />} />
+        </Routes>
+      </Box>
+    </BrowserRouter>
+  )
 }
-
-export default App;
