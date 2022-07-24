@@ -4,9 +4,9 @@ import { BodyContainer } from "../Layout"
 import { Button, Typography } from "@mui/material"
 import { Box } from "@mui/system"
 import { AddProductsDrawer } from "./AddProductsDrawer"
-import { deleteProduct, getProductsRealtime } from "../../firebase/products"
-import { Product } from "../../firebase/types"
+import { deleteProduct } from "../../firebase/products"
 import { EditProductsDrawer } from "./EditProductsDrawer"
+import { useRealtimeProducts } from "../../hooks/useRealtimeProducts"
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID" },
@@ -26,7 +26,7 @@ const columns: GridColDef[] = [
 export const ProductsPage = () => {
   const [addProductsDrawer, setAddProductsDrawer] = useState(false)
   const [editProductsDrawer, setEditProductsDrawer] = useState(false)
-  const [rows, setRows] = useState<Product[]>([])
+  const rows = useRealtimeProducts()
   const [selectedRows, setSelectedRows] = useState<string[]>([])
 
   const [isEditActive, setIsEditActive] = useState(false)
@@ -74,55 +74,6 @@ export const ProductsPage = () => {
     }
   }, [selectedRows])
 
-  useEffect(() => {
-    const unsub = getProductsRealtime((snapshot) => {
-      let newRows: Product[] = []
-
-      snapshot.docChanges().forEach(({ doc, type }) => {
-        if (type === "added") {
-          console.log(doc.data())
-          const { brand, name, packaging, size } = doc.data()
-
-          setRows((currentRows) => {
-            newRows = [...currentRows]
-            newRows.push({
-              id: doc.id,
-              brand,
-              name,
-              packaging,
-              size,
-            })
-            return newRows
-          })
-        }
-        if (type === "modified") {
-          console.log("mod")
-          setRows((currentRows) => {
-            newRows = [...currentRows]
-            const { brand, name, packaging, size } = doc.data()
-            const index = currentRows.findIndex((r) => r.id === doc.id)
-            newRows[index] = {
-              brand,
-              id: doc.id,
-              name,
-              packaging,
-              size,
-            }
-            return newRows
-          })
-        }
-        if (type === "removed") {
-          console.log("rem")
-          setRows((currentRows) => currentRows.filter((r) => r.id !== doc.id))
-        }
-      })
-    })
-
-    return () => {
-      unsub()
-    }
-  }, [])
-
   return (
     <>
       <AddProductsDrawer
@@ -134,6 +85,7 @@ export const ProductsPage = () => {
         open={editProductsDrawer}
         id={selectedRows[0]}
       />
+
       <BodyContainer>
         <Box>
           <Typography variant='h4' gutterBottom>
