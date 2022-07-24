@@ -20,7 +20,7 @@ export const Sidebar = () => {
   return (
     <div>
       <Toolbar />
-      {/* <Divider /> */}
+      <Divider />
       <List>
         {featurePages.map(({ name, Icon, path }) => (
           <ListItem key={name} disablePadding>
