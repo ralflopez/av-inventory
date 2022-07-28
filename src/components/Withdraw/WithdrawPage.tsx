@@ -1,34 +1,114 @@
-import { Typography } from "@mui/material"
-import React from "react"
+import { Box, Button, TextField, Typography } from "@mui/material"
+import {
+  DataGrid,
+  GridColDef,
+  selectedGridRowsCountSelector,
+} from "@mui/x-data-grid"
+import React, { useEffect, useMemo, useState } from "react"
+import { useRealtimeProducts } from "../../hooks/useRealtimeProducts"
+import { useWithdrawFormStore } from "../../store/withdrawForm"
 import { BodyContainer } from "../Layout"
+import { StoreInput } from "./StoreInput"
+
+const columns: GridColDef[] = [
+  {
+    field: "amount",
+    headerName: "Amount",
+    sortable: false,
+    width: 100,
+    editable: true,
+  },
+  { field: "brand", headerName: "Brand" },
+  { field: "name", headerName: "Name", width: 250 },
+  {
+    field: "size",
+    headerName: "Size",
+  },
+  {
+    field: "packaging",
+    headerName: "Packaging",
+  },
+]
 
 export const WithdrawPage = () => {
+  const data = useRealtimeProducts()
+  const [selectedRows, setSelectedRows] = useState<string[]>([])
+  const [rows, setRows] = useState<Record<string, any>[]>([])
+  const setWithdrawFormRows = useWithdrawFormStore(
+    (state: any) => state.setRows
+  )
+
+  // const Amount = (params: any) => {
+  //   const id = params.row.id
+  //   const index = rows.findIndex((row) => row.id === id)
+
+  //   const change = (
+  //     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  //   ) => {
+  //     setRows((rows) => {
+  //       const newRows = [...rows]
+  //       newRows[index].amount = Number(e.target.value)
+  //       return newRows
+  //     })
+  //   }
+
+  //   return (
+  //     <Box display='flex' onClick={(e) => e.stopPropagation()}>
+  //       <TextField
+  //         disabled={!selectedRows.includes(id)}
+  //         value={params.row.amount}
+  //         onChange={change}
+  //         variant='standard'
+  //         type='number'
+  //         InputProps={{
+  //           inputProps: {
+  //             min: 1,
+  //           },
+  //         }}
+  //       />
+  //     </Box>
+  //   )
+  // }
+
+  const print = () => {
+    window.print()
+  }
+
+  useEffect(() => {
+    const newRows = data.map((d) => ({ ...d, amount: 1 }))
+    setRows(newRows)
+  }, [data])
+
   return (
-    <BodyContainer>
-      <Typography paragraph>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magni
-        repellendus maxime neque voluptate laudantium molestiae rerum incidunt
-        laboriosam voluptatibus eos omnis modi, numquam distinctio tempore
-        repudiandae atque eius, sed, expedita optio officiis dolores tempora?
-        Sunt ipsa harum quod nobis aliquam. Dignissimos, ipsa, iusto
-        perspiciatis inventore commodi officiis molestiae expedita est, vitae
-        obcaecati saepe? Id error, rerum excepturi, inventore animi possimus
-        facilis dolorum corrupti tempora laboriosam iusto sequi obcaecati
-        corporis exercitationem? Tempore pariatur eius facilis officiis ipsum
-        maxime tempora libero harum quas, perferendis quaerat! Quae, velit
-        rerum. Dolor ratione officiis optio fugit expedita sunt, a soluta
-        aliquam impedit beatae quas amet corporis dicta harum quasi modi. Iste
-        debitis porro hic mollitia unde perferendis, suscipit possimus veniam id
-        eveniet nam, omnis neque autem alias consequuntur modi expedita quos
-        saepe obcaecati repellendus rerum rem? Laborum adipisci numquam esse sed
-        possimus? Consequuntur saepe nemo suscipit magnam natus expedita, iste
-        aliquid ipsum labore nostrum est ullam tempora exercitationem doloremque
-        maiores cum atque voluptatem. Ipsa hic earum praesentium provident,
-        excepturi unde quae! Tenetur iure ab reiciendis at voluptatem corporis
-        nostrum amet culpa. Reprehenderit quia obcaecati odit quo temporibus.
-        Atque blanditiis quae iure, tenetur optio nobis asperiores dolorum
-        maiores amet! Voluptatem, ad nostrum. Sed debitis quia veritatis.
-      </Typography>
-    </BodyContainer>
+    <>
+      <BodyContainer>
+        <Box>
+          <Typography variant='h4' gutterBottom>
+            Withdrawal Form
+          </Typography>
+        </Box>
+        <StoreInput />
+        <div style={{ height: 500, width: "100%" }}>
+          <DataGrid
+            disableSelectionOnClick
+            checkboxSelection
+            rows={rows}
+            columns={columns}
+            // pageSize={8}
+            // rowsPerPageOptions={[8]}
+            onSelectionModelChange={(ids) => {
+              const set = new Set<string>()
+              ids.forEach((id) => set.add(id.toString()))
+              setWithdrawFormRows(rows.filter((row) => set.has(row.id)))
+            }}
+          />
+        </div>
+        <Box mt={3}>
+          <Button variant='contained' color='primary' onClick={print}>
+            Print
+          </Button>
+        </Box>
+      </BodyContainer>
+    </>
   )
 }

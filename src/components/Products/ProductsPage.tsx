@@ -32,10 +32,6 @@ export const ProductsPage = () => {
   const [isEditActive, setIsEditActive] = useState(false)
   const [isDeleteActive, setIsDeleteActive] = useState(false)
 
-  useEffect(() => {
-    console.log(rows)
-  }, [rows])
-
   const toggleAddProductsDrawer = () => {
     setEditProductsDrawer(false)
     setAddProductsDrawer((s) => !s)

@@ -11,7 +11,6 @@ export const useRealtimeProducts = () => {
 
       snapshot.docChanges().forEach(({ doc, type }) => {
         if (type === "added") {
-          console.log(doc.data())
           const { brand, name, packaging, size } = doc.data()
 
           setRows((currentRows) => {
@@ -22,12 +21,12 @@ export const useRealtimeProducts = () => {
               name,
               packaging,
               size,
+              quantity: 0,
             })
             return newRows
           })
         }
         if (type === "modified") {
-          console.log("mod")
           setRows((currentRows) => {
             newRows = [...currentRows]
             const { brand, name, packaging, size } = doc.data()
@@ -38,12 +37,12 @@ export const useRealtimeProducts = () => {
               name,
               packaging,
               size,
+              quantity: 0,
             }
             return newRows
           })
         }
         if (type === "removed") {
-          console.log("rem")
           setRows((currentRows) => currentRows.filter((r) => r.id !== doc.id))
         }
       })
