@@ -31,7 +31,9 @@ export const MainAppBar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant='h6' noWrap component='div'></Typography>
+          <Typography variant='h6' noWrap component='div'>
+            Altrosof Ventures
+          </Typography>
         </Toolbar>
       </AppBar>
 
