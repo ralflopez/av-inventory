@@ -5,6 +5,7 @@ import {
   selectedGridRowsCountSelector,
 } from "@mui/x-data-grid"
 import React, { useEffect, useMemo, useState } from "react"
+import { Product, Transaction, WithdrawTransaction } from "../../firebase/types"
 import { useRealtimeProducts } from "../../hooks/useRealtimeProducts"
 import { useWithdrawFormStore } from "../../store/withdrawForm"
 import { BodyContainer } from "../Layout"
@@ -12,20 +13,34 @@ import { StoreInput } from "./StoreInput"
 
 const columns: GridColDef[] = [
   {
-    field: "amount",
-    headerName: "Amount",
+    field: "free",
+    headerName: "Free",
     sortable: false,
     width: 100,
     editable: true,
   },
-  { field: "brand", headerName: "Brand" },
-  { field: "name", headerName: "Name", width: 250 },
   {
-    field: "size",
+    field: "cs",
+    headerName: "Case",
+    sortable: false,
+    width: 100,
+    editable: true,
+  },
+  {
+    field: "pck",
+    headerName: "Pack",
+    sortable: false,
+    width: 100,
+    editable: true,
+  },
+  { field: "product_brand", headerName: "Brand" },
+  { field: "product_name", headerName: "Name", width: 150 },
+  {
+    field: "product_size",
     headerName: "Size",
   },
   {
-    field: "packaging",
+    field: "product_packaging",
     headerName: "Packaging",
   },
 ]
@@ -33,49 +48,30 @@ const columns: GridColDef[] = [
 export const WithdrawPage = () => {
   const data = useRealtimeProducts()
   const [selectedRows, setSelectedRows] = useState<string[]>([])
-  const [rows, setRows] = useState<Record<string, any>[]>([])
+  const [rows, setRows] = useState<WithdrawTransaction[]>([])
   const setWithdrawFormRows = useWithdrawFormStore(
     (state: any) => state.setRows
   )
-
-  // const Amount = (params: any) => {
-  //   const id = params.row.id
-  //   const index = rows.findIndex((row) => row.id === id)
-
-  //   const change = (
-  //     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  //   ) => {
-  //     setRows((rows) => {
-  //       const newRows = [...rows]
-  //       newRows[index].amount = Number(e.target.value)
-  //       return newRows
-  //     })
-  //   }
-
-  //   return (
-  //     <Box display='flex' onClick={(e) => e.stopPropagation()}>
-  //       <TextField
-  //         disabled={!selectedRows.includes(id)}
-  //         value={params.row.amount}
-  //         onChange={change}
-  //         variant='standard'
-  //         type='number'
-  //         InputProps={{
-  //           inputProps: {
-  //             min: 1,
-  //           },
-  //         }}
-  //       />
-  //     </Box>
-  //   )
-  // }
 
   const print = () => {
     window.print()
   }
 
   useEffect(() => {
-    const newRows = data.map((d) => ({ ...d, amount: 1 }))
+    const newRows = data.map(
+      ({ brand, id, name, packaging, size }) =>
+        ({
+          cs: 0,
+          free: 0,
+          pck: 0,
+          product_brand: brand,
+          product_id: id,
+          product_name: name,
+          product_packaging: packaging,
+          product_size: size,
+          salesman: "",
+        } as WithdrawTransaction)
+    )
     setRows(newRows)
   }, [data])
 
@@ -90,16 +86,18 @@ export const WithdrawPage = () => {
         <StoreInput />
         <div style={{ height: 500, width: "100%" }}>
           <DataGrid
+            disableVirtualization
             disableSelectionOnClick
             checkboxSelection
             rows={rows}
             columns={columns}
+            getRowId={(row) => row.product_id}
             // pageSize={8}
             // rowsPerPageOptions={[8]}
             onSelectionModelChange={(ids) => {
               const set = new Set<string>()
               ids.forEach((id) => set.add(id.toString()))
-              setWithdrawFormRows(rows.filter((row) => set.has(row.id)))
+              setWithdrawFormRows(rows.filter((row) => set.has(row.product_id)))
             }}
           />
         </div>

@@ -17,6 +17,7 @@ export const EditProductsDrawer = ({ open, toggle, id }: Props) => {
     name: "",
     packaging: "",
     size: "",
+    quantity: 0,
   })
 
   useEffect(() => {

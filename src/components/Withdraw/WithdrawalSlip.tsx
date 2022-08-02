@@ -1,3 +1,4 @@
+import { useTheme } from "@emotion/react"
 import {
   Divider,
   Paper,
@@ -11,8 +12,16 @@ import {
 } from "@mui/material"
 import { Box } from "@mui/system"
 import { useEffect, useState } from "react"
+import { WithdrawTransaction } from "../../firebase/types"
 import { useWithdrawFormStore } from "../../store/withdrawForm"
-const ITEMS_PER_PAGE = 25
+
+const ITEMS_PER_PAGE = 50
+const COLUMN_FONT_SIZE = 8
+const COLUMN_PADDING = 0
+// 60, 8, 0
+// 50, 9, 0
+// 40, 10, 1
+// 30, 10, 1
 
 const getDate = () => {
   var today = new Date()
@@ -37,7 +46,8 @@ export const WithdrawalSlip = () => {
       res.push(chunk)
     }
     setRowsPartition(res)
-    console.log(rows)
+    console.log("RES:")
+    console.log(res)
   }, [rows])
 
   return (
@@ -47,9 +57,15 @@ export const WithdrawalSlip = () => {
         "@media print": {
           display: "block",
         },
+        // position: "fixed",
+        // zIndex: 99999,
+        // left: 0,
+        // right: 0,
+        // top: 0,
+        // bottom: 0,
         backgroundColor: "white",
       }}
-      p={3}
+      p={0}
     >
       <Typography variant='body1' gutterBottom color='primary'>
         Altrosof Ventures
@@ -60,62 +76,137 @@ export const WithdrawalSlip = () => {
         alignItems='flex-end'
         mb={1}
       >
-        <Typography variant='h5' fontWeight='bold' style={{ margin: 0 }}>
+        <Typography variant='h6' fontWeight='bold' style={{ margin: 0 }}>
           Withdrawal Form
         </Typography>
-        <Typography variant='body2'>{getDate()}</Typography>
+        <Typography variant='body1'>SO #</Typography>
+        <Typography variant='body1'>AR #</Typography>
+        <Typography variant='body1' mr={10}>
+          PO #
+        </Typography>
       </Box>
       <Divider />
       <Box mt={1}>
-        <Box mb={1} display='flex' justifyContent='space-between'>
-          <Typography variant='body1' gutterBottom>
-            Name of Store: {storeName}
+        <Box mb={0} display='flex' justifyContent='space-between'>
+          <Typography variant='body1'>
+            {`Store: `}
+            <Typography sx={{ textDecoration: "underline" }} component='span'>
+              {storeName}
+            </Typography>
           </Typography>
-          <Typography variant='body1' gutterBottom>
-            Address: {storeAddress}
-          </Typography>
+          <Typography variant='body2'>Date: {getDate()}</Typography>
         </Box>
-        <Box mb={2}>
+        <Typography variant='body1'>
+          {`Address: `}
+          <Typography sx={{ textDecoration: "underline" }} component='span'>
+            {storeAddress}
+          </Typography>
+        </Typography>
+
+        <Box display='flex'>
           {rowsPartition.map((rows) => (
-            <>
-              <TableContainer component={Paper} elevation={0}>
-                <Table
-                  sx={{ minWidth: 650 }}
-                  aria-label='withdrawal form table'
-                  size='small'
-                >
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>Brand</TableCell>
-                      <TableCell align='right'>Name</TableCell>
-                      <TableCell align='right'>Size</TableCell>
-                      <TableCell align='right'>Packaging</TableCell>
-                      <TableCell align='right'>Amount</TableCell>
-                    </TableRow>
-                  </TableHead>
-                  <TableBody>
-                    {rows.map((row: any) => (
-                      <TableRow
-                        key={row.id}
-                        sx={{
-                          "&:last-child td, &:last-child th": { border: 0 },
+            <TableContainer>
+              <Table size='small' style={{ overflow: "hidden" }}>
+                <TableHead>
+                  <TableRow>
+                    <TableCell padding='none'>Product</TableCell>
+                    <TableCell align='left'>FREE</TableCell>
+                    <TableCell align='left'>CS</TableCell>
+                    <TableCell align='left'>PCK</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {rows.map((row: WithdrawTransaction) => (
+                    <TableRow sx={{ padding: 0 }}>
+                      <TableCell
+                        padding='none'
+                        style={{
+                          padding: COLUMN_PADDING,
                         }}
                       >
-                        <TableCell component='th' scope='row'>
-                          {row.brand}
-                        </TableCell>
-                        <TableCell align='right'>{row.name}</TableCell>
-                        <TableCell align='right'>{row.size}</TableCell>
-                        <TableCell align='right'>{row.packaging}</TableCell>
-                        <TableCell align='right'>{row.amount}</TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-              <div style={{ pageBreakAfter: "always" }}></div>
-            </>
+                        <Typography
+                          fontSize={COLUMN_FONT_SIZE}
+                          variant='body1'
+                        >{`${row.product_brand} ${row.product_name} ${row.product_size} ${row.product_packaging}`}</Typography>
+                      </TableCell>
+                      <TableCell
+                        align='center'
+                        style={{
+                          padding: COLUMN_PADDING,
+                        }}
+                      >
+                        <Typography fontSize={COLUMN_FONT_SIZE} variant='body1'>
+                          {row.free}
+                        </Typography>
+                      </TableCell>
+                      <TableCell
+                        align='center'
+                        style={{
+                          padding: COLUMN_PADDING,
+                        }}
+                      >
+                        <Typography fontSize={COLUMN_FONT_SIZE} variant='body1'>
+                          {row.cs}
+                        </Typography>
+                      </TableCell>
+                      <TableCell
+                        align='center'
+                        style={{
+                          padding: COLUMN_PADDING,
+                        }}
+                      >
+                        <Typography fontSize={COLUMN_FONT_SIZE} variant='body1'>
+                          {row.pck}
+                        </Typography>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
           ))}
+        </Box>
+      </Box>
+      <Box display='flex' mt={5} justifyContent='space-around'>
+        <Box>
+          <div
+            style={{
+              width: "100%",
+              height: "0.09em",
+              border: `0.09em solid black`,
+            }}
+          ></div>
+          <Typography>Salesman</Typography>
+        </Box>
+        <Box>
+          <div
+            style={{
+              width: "100%",
+              height: "0.09em",
+              border: `0.09em solid black`,
+            }}
+          ></div>
+          <Typography>Driver's Name and Signature</Typography>
+        </Box>
+        <Box>
+          <div
+            style={{
+              width: "100%",
+              height: "0.09em",
+              border: `0.09em solid black`,
+            }}
+          ></div>
+          <Typography>Warehouse Incharge Signature</Typography>
+        </Box>
+        <Box>
+          <div
+            style={{
+              width: "100%",
+              height: "0.09em",
+              border: `0.09em solid black`,
+            }}
+          ></div>
+          <Typography>Date Delivered</Typography>
         </Box>
       </Box>
     </Box>

@@ -54,6 +54,7 @@ export const ProductForm = ({
         packaging,
         size,
         id,
+        quantity: 0,
       })
       setBrand("")
       setName("")
