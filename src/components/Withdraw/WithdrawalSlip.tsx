@@ -106,7 +106,7 @@ export const WithdrawalSlip = () => {
         <Box display='flex'>
           {rowsPartition.map((rows) => (
             <TableContainer>
-              <Table size='small' style={{ overflow: "hidden" }}>
+              {/* <Table size='small' style={{ overflow: "hidden" }}>
                 <TableHead>
                   <TableRow>
                     <TableCell padding='none'>Product</TableCell>
@@ -127,7 +127,7 @@ export const WithdrawalSlip = () => {
                         <Typography
                           fontSize={COLUMN_FONT_SIZE}
                           variant='body1'
-                        >{`${row.product_brand} ${row.product_name} ${row.product_size} ${row.product_packaging}`}</Typography>
+                        >{`${row.product.brand} ${row.product.name} ${row.product.size} ${row.product.packaging}`}</Typography>
                       </TableCell>
                       <TableCell
                         align='center'
@@ -136,7 +136,7 @@ export const WithdrawalSlip = () => {
                         }}
                       >
                         <Typography fontSize={COLUMN_FONT_SIZE} variant='body1'>
-                          {row.free}
+                          {row.}
                         </Typography>
                       </TableCell>
                       <TableCell
@@ -162,7 +162,7 @@ export const WithdrawalSlip = () => {
                     </TableRow>
                   ))}
                 </TableBody>
-              </Table>
+              </Table> */}
             </TableContainer>
           ))}
         </Box>

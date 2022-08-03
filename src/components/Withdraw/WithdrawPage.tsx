@@ -1,11 +1,10 @@
 import { Box, Button, TextField, Typography } from "@mui/material"
+import { DataGrid, GridColDef } from "@mui/x-data-grid"
+import React, { useEffect, useState } from "react"
 import {
-  DataGrid,
-  GridColDef,
-  selectedGridRowsCountSelector,
-} from "@mui/x-data-grid"
-import React, { useEffect, useMemo, useState } from "react"
-import { Product, Transaction, WithdrawTransaction } from "../../firebase/types"
+  WithdrawTransaction,
+  WithdrawTransactionProduct,
+} from "../../firebase/types"
 import { useRealtimeProducts } from "../../hooks/useRealtimeProducts"
 import { useWithdrawFormStore } from "../../store/withdrawForm"
 import { BodyContainer } from "../Layout"
@@ -33,22 +32,33 @@ const columns: GridColDef[] = [
     width: 100,
     editable: true,
   },
-  { field: "product_brand", headerName: "Brand" },
-  { field: "product_name", headerName: "Name", width: 150 },
   {
-    field: "product_size",
-    headerName: "Size",
+    field: "brand",
+    headerName: "Brand",
+    valueGetter: (params) => params.row.product.brand,
   },
   {
-    field: "product_packaging",
+    field: "name",
+    headerName: "Name",
+    width: 150,
+    valueGetter: (params) => params.row.product.name,
+  },
+  {
+    field: "size",
+    headerName: "Size",
+    valueGetter: (params) => params.row.product.size,
+  },
+  {
+    field: "packaging",
     headerName: "Packaging",
+    valueGetter: (params) => params.row.product.packaging,
   },
 ]
 
 export const WithdrawPage = () => {
   const data = useRealtimeProducts()
   const [selectedRows, setSelectedRows] = useState<string[]>([])
-  const [rows, setRows] = useState<WithdrawTransaction[]>([])
+  const [rows, setRows] = useState<WithdrawTransaction["products"]>([])
   const setWithdrawFormRows = useWithdrawFormStore(
     (state: any) => state.setRows
   )
@@ -59,18 +69,13 @@ export const WithdrawPage = () => {
 
   useEffect(() => {
     const newRows = data.map(
-      ({ brand, id, name, packaging, size }) =>
+      (product) =>
         ({
+          product,
           cs: 0,
           free: 0,
           pck: 0,
-          product_brand: brand,
-          product_id: id,
-          product_name: name,
-          product_packaging: packaging,
-          product_size: size,
-          salesman: "",
-        } as WithdrawTransaction)
+        } as WithdrawTransactionProduct)
     )
     setRows(newRows)
   }, [data])
@@ -91,13 +96,13 @@ export const WithdrawPage = () => {
             checkboxSelection
             rows={rows}
             columns={columns}
-            getRowId={(row) => row.product_id}
+            getRowId={(row) => row.product.id}
             // pageSize={8}
             // rowsPerPageOptions={[8]}
             onSelectionModelChange={(ids) => {
               const set = new Set<string>()
               ids.forEach((id) => set.add(id.toString()))
-              setWithdrawFormRows(rows.filter((row) => set.has(row.product_id)))
+              setWithdrawFormRows(rows.filter((row) => set.has(row.product.id)))
             }}
           />
         </div>

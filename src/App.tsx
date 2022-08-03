@@ -7,13 +7,12 @@ import CssBaseline from "@mui/material/CssBaseline"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { MainAppBar } from "./components/Layout/MainAppBar"
 import { ProductsPage } from "./components/Products/ProductsPage"
-import { WithdrawalSlip } from "./components/Withdraw/WithdrawalSlip"
 import { WithdrawPage } from "./components/Withdraw/WithdrawPage"
 
 export default function ResponsiveDrawer() {
   return (
     <BrowserRouter>
-      <WithdrawalSlip />
+      {/* <WithdrawalSlip /> */}
       <Box
         sx={{
           display: "flex",
