@@ -78,6 +78,7 @@ export const WithdrawPage = () => {
         } as WithdrawTransactionProduct)
     )
     setRows(newRows)
+    console.log(data)
   }, [data])
 
   return (
@@ -89,7 +90,7 @@ export const WithdrawPage = () => {
           </Typography>
         </Box>
         <StoreInput />
-        <div style={{ height: 500, width: "100%" }}>
+        <div style={{ height: "100vh", width: "100%" }}>
           <DataGrid
             disableVirtualization
             disableSelectionOnClick
@@ -97,8 +98,8 @@ export const WithdrawPage = () => {
             rows={rows}
             columns={columns}
             getRowId={(row) => row.product.id}
-            // pageSize={8}
-            // rowsPerPageOptions={[8]}
+            // pageSize={200}
+            // rowsPerPageOptions={[200]}
             onSelectionModelChange={(ids) => {
               const set = new Set<string>()
               ids.forEach((id) => set.add(id.toString()))
