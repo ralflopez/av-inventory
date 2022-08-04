@@ -10,6 +10,7 @@ import {
 } from "@mui/material"
 import { Box } from "@mui/system"
 import { FormEvent, useState } from "react"
+import { brands } from "../../constants/products"
 import { Product } from "../../firebase/types"
 
 interface Props {
@@ -113,21 +114,7 @@ export const ProductForm = ({
             label='Brand'
             onChange={(e) => setBrand(e.target.value)}
           >
-            {[
-              "Adult Diapers",
-              "Bathroom Tissue",
-              "Cherub Baby Products",
-              "Disposable Face Mask",
-              "Fasclean Detergent",
-              "Fasclean Det w/ Fabcon",
-              "Face Shiled",
-              "Lampein Baby Diapers",
-              "Lampein Generic",
-              "Sisters Pantyliner",
-              "Sisters Sanitary Napkin",
-              "Twins Baby Diapers",
-              "Twins Easy Wear",
-            ].map((brand) => (
+            {brands.map((brand) => (
               <MenuItem value={brand} id={brand}>
                 {brand}
               </MenuItem>

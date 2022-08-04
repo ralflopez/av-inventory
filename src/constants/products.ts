@@ -1,7 +1,15 @@
-export const products = [
-  {
-    brand: "Sisters",
-    name: "MEGAPACK",
-    packaging: "36x36",
-  },
+export const brands = [
+  "Adult Diapers",
+  "Bathroom Tissue",
+  "Cherub Baby Products",
+  "Disposable Face Mask",
+  "Fasclean Detergent",
+  "Fasclean Det w/ Fabcon",
+  "Face Shiled",
+  "Lampein Baby Diapers",
+  "Lampein Generic",
+  "Sisters Pantyliner",
+  "Sisters Sanitary Napkin",
+  "Twins Baby Diapers",
+  "Twins Easy Wear",
 ]
