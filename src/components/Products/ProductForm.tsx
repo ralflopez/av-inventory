@@ -1,4 +1,13 @@
-import { Button, CircularProgress, TextField, Typography } from "@mui/material"
+import {
+  Button,
+  CircularProgress,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  Typography,
+} from "@mui/material"
 import { Box } from "@mui/system"
 import { FormEvent, useState } from "react"
 import { Product } from "../../firebase/types"
@@ -21,7 +30,7 @@ export const ProductForm = ({
   action,
   actionName,
   id = "",
-  brandInit = "",
+  brandInit = "Adult Diapers",
   nameInit = "",
   packagingInit = "",
   sizeInit = "",
@@ -83,7 +92,7 @@ export const ProductForm = ({
       <Typography variant='h5' gutterBottom>
         {title}
       </Typography>
-      <Box mb={2} mt={2}>
+      {/* <Box mb={2} mt={2}>
         <TextField
           error={errors["brand"]}
           fullWidth
@@ -92,6 +101,39 @@ export const ProductForm = ({
           value={brand}
           onChange={(e) => setBrand(e.target.value)}
         />
+      </Box> */}
+      <Box mb={2} mt={2}>
+        <FormControl fullWidth>
+          <InputLabel id='brand-label'>Brand</InputLabel>
+          <Select
+            fullWidth
+            labelId='brand-label'
+            id='brand'
+            value={brand}
+            label='Brand'
+            onChange={(e) => setBrand(e.target.value)}
+          >
+            {[
+              "Adult Diapers",
+              "Bathroom Tissue",
+              "Cherub Baby Products",
+              "Disposable Face Mask",
+              "Fasclean Detergent",
+              "Fasclean Det w/ Fabcon",
+              "Face Shiled",
+              "Lampein Baby Diapers",
+              "Lampein Generic",
+              "Sisters Pantyliner",
+              "Sisters Sanitary Napkin",
+              "Twins Baby Diapers",
+              "Twins Easy Wear",
+            ].map((brand) => (
+              <MenuItem value={brand} id={brand}>
+                {brand}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </Box>
       <Box mb={2}>
         <TextField
@@ -123,6 +165,7 @@ export const ProductForm = ({
           onChange={(e) => setPackaging(e.target.value)}
         />
       </Box>
+
       <Box mt={3}>
         {loading ? (
           <CircularProgress />

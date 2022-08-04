@@ -10,7 +10,7 @@ import { useRealtimeProducts } from "../../hooks/useRealtimeProducts"
 
 const columns: GridColDef[] = [
   { field: "id", headerName: "ID" },
-  { field: "brand", headerName: "Brand" },
+  { field: "brand", headerName: "Brand", width: 200 },
   { field: "name", headerName: "Name", minWidth: 250 },
   {
     field: "size",
