@@ -6,6 +6,7 @@ import {
 } from "../../store/withdrawForm"
 
 export const StoreInput = () => {
+  console.log("render store input")
   const {
     storeName,
     setStoreName,
@@ -21,7 +22,14 @@ export const StoreInput = () => {
 
   return (
     <Box>
-      <Box mr={2} mb={2} display='inline-block'>
+      <Box
+        mr={2}
+        mb={2}
+        display={{
+          sm: "block",
+          md: "inline-block",
+        }}
+      >
         <TextField
           fullWidth
           value={storeName}
@@ -29,7 +37,14 @@ export const StoreInput = () => {
           onChange={(e) => setStoreName(e.target.value)}
         />
       </Box>
-      <Box mr={2} mb={3} display='inline-block'>
+      <Box
+        mr={2}
+        mb={3}
+        display={{
+          sm: "block",
+          md: "inline-block",
+        }}
+      >
         <TextField
           fullWidth
           value={storeAddress}
@@ -37,7 +52,14 @@ export const StoreInput = () => {
           onChange={(e) => setStoreAddress(e.target.value)}
         />
       </Box>
-      <Box mr={2} mb={3} display='inline-block'>
+      <Box
+        mr={2}
+        mb={3}
+        display={{
+          sm: "block",
+          md: "inline-block",
+        }}
+      >
         <TextField
           fullWidth
           value={salesman}
@@ -45,7 +67,14 @@ export const StoreInput = () => {
           onChange={(e) => setSalesman(e.target.value)}
         />
       </Box>
-      <Box mr={2} mb={3} display='inline-block'>
+      <Box
+        mr={2}
+        mb={3}
+        display={{
+          sm: "block",
+          md: "inline-block",
+        }}
+      >
         <TextField
           fullWidth
           value={warehouseInCharge}
@@ -53,7 +82,14 @@ export const StoreInput = () => {
           onChange={(e) => setWarehouseInCharge(e.target.value)}
         />
       </Box>
-      <Box mr={2} mb={3} display='inline-block'>
+      <Box
+        mr={2}
+        mb={3}
+        display={{
+          sm: "block",
+          md: "inline-block",
+        }}
+      >
         <TextField
           fullWidth
           value={poNo}

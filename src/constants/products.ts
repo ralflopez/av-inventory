@@ -1,15 +1,15 @@
 export const brands = [
-  "Adult Diapers",
-  "Bathroom Tissue",
-  "Cherub Baby Products",
-  "Disposable Face Mask",
-  "Fasclean Detergent",
-  "Fasclean Det w/ Fabcon",
-  "Face Shiled",
-  "Lampein Baby Diapers",
-  "Lampein Generic",
-  "Sisters Pantyliner",
-  "Sisters Sanitary Napkin",
-  "Twins Baby Diapers",
-  "Twins Easy Wear",
+  "Adult Diapers", // 6
+  "Bathroom Tissue", // 3
+  "Cherub Baby Products", // 12
+  "Disposable Face Mask", // 3
+  "Fasclean Detergent", // 5
+  "Fasclean Det w/ Fabcon", // 3
+  "Face Shiled", // 1
+  "Lampein Baby Diapers", // 30
+  "Lampein Generic", // 5
+  "Sisters Pantyliner", // 8
+  "Sisters Sanitary Napkin", // 13
+  "Twins Baby Diapers", // 13
+  "Twins Easy Wear", // 12
 ]

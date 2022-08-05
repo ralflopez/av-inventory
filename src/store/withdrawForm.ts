@@ -1,4 +1,5 @@
 import create from "zustand"
+import { WithdrawTransactionProduct } from "../firebase/types"
 
 export interface WithdrawFormState {
   storeName: string
@@ -6,10 +7,10 @@ export interface WithdrawFormState {
   salesman: string
   warehouseInCharge: string
   poNo: string
-  rows: Record<string, any>[]
+  rows: WithdrawTransactionProduct[]
   setStoreName: (name: string) => void
   setStoreAddress: (address: string) => void
-  setRows: (rows: Record<string, any>[]) => void
+  setRows: (rows: WithdrawTransactionProduct[]) => void
   setSalesman: (name: string) => void
   setWarehouseInCharge: (name: string) => void
   setPoNo: (poNo: string) => void
@@ -26,7 +27,7 @@ export const useWithdrawFormStore = create<WithdrawFormState>((set) => ({
     set((state) => ({ ...state, storeName: name })),
   setStoreAddress: (address: string) =>
     set((state) => ({ ...state, storeAddress: address })),
-  setRows: (rows: Record<string, any>[]) =>
+  setRows: (rows: WithdrawTransactionProduct[]) =>
     set((state) => ({ ...state, rows })),
   setSalesman: (name: string) => set((state) => ({ ...state, salesman: name })),
   setWarehouseInCharge: (name: string) =>

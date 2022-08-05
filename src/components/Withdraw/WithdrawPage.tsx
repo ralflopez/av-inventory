@@ -1,85 +1,52 @@
 import { Box, Button, TextField, Typography } from "@mui/material"
-import { DataGrid, GridColDef } from "@mui/x-data-grid"
-import React, { useEffect, useState } from "react"
+import { DataGrid, GridColDef, GridSelectionModel } from "@mui/x-data-grid"
+import React, { useCallback, useEffect, useState } from "react"
+import { brands } from "../../constants/products"
+import { addProduct } from "../../firebase/products"
 import {
   WithdrawTransaction,
   WithdrawTransactionProduct,
 } from "../../firebase/types"
 import { useRealtimeProducts } from "../../hooks/useRealtimeProducts"
-import { useWithdrawFormStore } from "../../store/withdrawForm"
+import {
+  useWithdrawFormStore,
+  WithdrawFormState,
+} from "../../store/withdrawForm"
 import { BodyContainer } from "../Layout"
+import { Datagrid } from "./Datagrid"
 import { StoreInput } from "./StoreInput"
-
-const columns: GridColDef[] = [
-  {
-    field: "free",
-    headerName: "Free",
-    sortable: false,
-    width: 100,
-    editable: true,
-  },
-  {
-    field: "cs",
-    headerName: "Case",
-    sortable: false,
-    width: 100,
-    editable: true,
-  },
-  {
-    field: "pck",
-    headerName: "Pack",
-    sortable: false,
-    width: 100,
-    editable: true,
-  },
-  {
-    field: "brand",
-    headerName: "Brand",
-    valueGetter: (params) => params.row.product.brand,
-  },
-  {
-    field: "name",
-    headerName: "Name",
-    width: 150,
-    valueGetter: (params) => params.row.product.name,
-  },
-  {
-    field: "size",
-    headerName: "Size",
-    valueGetter: (params) => params.row.product.size,
-  },
-  {
-    field: "packaging",
-    headerName: "Packaging",
-    valueGetter: (params) => params.row.product.packaging,
-  },
-]
+import { WithdrawalForm } from "./WithdrawalFormOutput/WithdrawalForm"
 
 export const WithdrawPage = () => {
   const data = useRealtimeProducts()
-  const [selectedRows, setSelectedRows] = useState<string[]>([])
-  const [rows, setRows] = useState<WithdrawTransaction["products"]>([])
-  const setWithdrawFormRows = useWithdrawFormStore(
-    (state: any) => state.setRows
-  )
+  const { rows: withdrawFormRows, setRows: setWithdrawFormRows } =
+    useWithdrawFormStore<WithdrawFormState>((state: any) => state)
+  console.log("render withdraw page")
+  // const [printMode, setPrintMode] = useState(false)
 
   const print = () => {
+    // setPrintMode(true)
+    // setPrintMode(() => {
     window.print()
+    // return false
+    // })
   }
 
-  useEffect(() => {
-    const newRows = data.map(
-      (product) =>
-        ({
-          product,
-          cs: 0,
-          free: 0,
-          pck: 0,
-        } as WithdrawTransactionProduct)
-    )
-    setRows(newRows)
-    console.log(data)
-  }, [data])
+  const seed = () => {
+    const count = [6, 3, 12, 3, 5, 3, 1, 30, 5, 8, 13, 13, 12]
+    brands.forEach((brand, idx) => {
+      for (let i = 0; i < count[idx]; i++) {
+        addProduct({
+          id: "",
+          brand,
+          name: "Cherub Protective Mask KN95",
+          packaging: "5 x 100",
+          size: "",
+          quantity: 0,
+        })
+      }
+    })
+  }
 
   return (
     <>
@@ -90,27 +57,16 @@ export const WithdrawPage = () => {
           </Typography>
         </Box>
         <StoreInput />
-        <div style={{ height: "100vh", width: "100%" }}>
-          <DataGrid
-            disableVirtualization
-            disableSelectionOnClick
-            checkboxSelection
-            rows={rows}
-            columns={columns}
-            getRowId={(row) => row.product.id}
-            // pageSize={200}
-            // rowsPerPageOptions={[200]}
-            onSelectionModelChange={(ids) => {
-              const set = new Set<string>()
-              ids.forEach((id) => set.add(id.toString()))
-              setWithdrawFormRows(rows.filter((row) => set.has(row.product.id)))
-            }}
-          />
-        </div>
+        <Datagrid
+          data={data}
+          withdrawFormRows={withdrawFormRows}
+          setWithdrawFormRows={setWithdrawFormRows}
+        />
         <Box mt={3}>
           <Button variant='contained' color='primary' onClick={print}>
             Print
           </Button>
+          <Button onClick={seed}>Seed</Button>
         </Box>
       </BodyContainer>
     </>

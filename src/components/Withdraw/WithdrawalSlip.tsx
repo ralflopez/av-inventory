@@ -54,9 +54,9 @@ export const WithdrawalSlip = () => {
     <Box
       sx={{
         display: "none",
-        "@media print": {
-          display: "block",
-        },
+        // "@media print": {
+        //   display: "block",
+        // },
         // position: "fixed",
         // zIndex: 99999,
         // left: 0,
