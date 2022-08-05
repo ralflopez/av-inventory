@@ -19,21 +19,21 @@ export const WithdrawPage = () => {
     window.print()
   }
 
-  const seed = () => {
-    const count = [6, 3, 12, 3, 5, 3, 1, 30, 5, 8, 13, 13, 12]
-    brands.forEach((brand, idx) => {
-      for (let i = 0; i < count[idx]; i++) {
-        addProduct({
-          id: "",
-          brand,
-          name: "Cherub Protective Mask KN95",
-          packaging: "5 x 100",
-          size: "",
-          quantity: 0,
-        })
-      }
-    })
-  }
+  // const seed = () => {
+  //   const count = [6, 3, 12, 3, 5, 3, 1, 30, 5, 8, 13, 13, 12]
+  //   brands.forEach((brand, idx) => {
+  //     for (let i = 0; i < count[idx]; i++) {
+  //       addProduct({
+  //         id: "",
+  //         brand,
+  //         name: "Cherub Protective Mask KN95",
+  //         packaging: "5 x 100",
+  //         size: "",
+  //         quantity: 0,
+  //       })
+  //     }
+  //   })
+  // }
 
   return (
     <>
@@ -53,7 +53,7 @@ export const WithdrawPage = () => {
           <Button variant='contained' color='primary' onClick={print}>
             Print
           </Button>
-          <Button onClick={seed}>Seed</Button>
+          {/* <Button onClick={seed}>Seed</Button> */}
         </Box>
       </BodyContainer>
     </>
