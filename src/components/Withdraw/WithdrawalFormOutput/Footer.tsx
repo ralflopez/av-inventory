@@ -1,7 +1,6 @@
 import { Typography } from "@mui/material"
 import { Box } from "@mui/system"
-import React, { useContext, useEffect, useState } from "react"
-import { WithdrawTransactionProduct } from "../../../firebase/types"
+import { useContext } from "react"
 import { useWithdrawFormStore } from "../../../store/withdrawForm"
 import { FontSizeContext } from "./WithdrawalForm"
 

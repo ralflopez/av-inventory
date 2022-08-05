@@ -4,17 +4,13 @@ import {
   GridColDef,
   GridSelectionModel,
 } from "@mui/x-data-grid"
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import {
   Product,
   WithdrawTransaction,
   WithdrawTransactionProduct,
 } from "../../firebase/types"
-import { useRealtimeProducts } from "../../hooks/useRealtimeProducts"
-import {
-  useWithdrawFormStore,
-  WithdrawFormState,
-} from "../../store/withdrawForm"
+import { WithdrawFormState } from "../../store/withdrawForm"
 
 const columns: GridColDef[] = [
   {
@@ -82,10 +78,7 @@ interface Props {
 
 export const Datagrid = React.memo(
   ({ data, withdrawFormRows, setWithdrawFormRows }: Props) => {
-    console.log("render data grid")
-
     const [rows, setRows] = useState<WithdrawTransaction["products"]>([])
-    const [selectedRows, setSelectedRows] = useState<GridSelectionModel>([])
 
     useEffect(() => {
       console.log("new data")
@@ -101,19 +94,11 @@ export const Datagrid = React.memo(
       setRows(newRows)
     }, [data])
 
-    useEffect(() => {
-      console.log("new rows")
-    }, [rows])
-    useEffect(() => {
-      console.log("new withdrar rows")
-    }, [withdrawFormRows])
-
     const onSelectionModelChange = useCallback(
       async (ids: GridSelectionModel) => {
         const set = new Set<string>()
         ids.forEach((id) => set.add(id.toString()))
         setWithdrawFormRows(rows.filter((row) => set.has(row.product.id)))
-        // setSelectedRows(ids)
       },
       [rows, setWithdrawFormRows]
     )

@@ -49,7 +49,6 @@ export const FONT_SIZES = {
 export const FontSizeContext = React.createContext(FONT_SIZES["gte1"])
 
 export const WithdrawalForm = () => {
-  console.log("render withdrawal form")
   const rows = useWithdrawFormStore<WithdrawFormState["rows"]>(
     (state) => state.rows
   )

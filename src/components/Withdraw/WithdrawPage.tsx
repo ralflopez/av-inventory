@@ -1,12 +1,6 @@
-import { Box, Button, TextField, Typography } from "@mui/material"
-import { DataGrid, GridColDef, GridSelectionModel } from "@mui/x-data-grid"
-import React, { useCallback, useEffect, useState } from "react"
+import { Box, Button, Typography } from "@mui/material"
 import { brands } from "../../constants/products"
 import { addProduct } from "../../firebase/products"
-import {
-  WithdrawTransaction,
-  WithdrawTransactionProduct,
-} from "../../firebase/types"
 import { useRealtimeProducts } from "../../hooks/useRealtimeProducts"
 import {
   useWithdrawFormStore,
@@ -15,21 +9,14 @@ import {
 import { BodyContainer } from "../Layout"
 import { Datagrid } from "./Datagrid"
 import { StoreInput } from "./StoreInput"
-import { WithdrawalForm } from "./WithdrawalFormOutput/WithdrawalForm"
 
 export const WithdrawPage = () => {
   const data = useRealtimeProducts()
   const { rows: withdrawFormRows, setRows: setWithdrawFormRows } =
     useWithdrawFormStore<WithdrawFormState>((state: any) => state)
-  console.log("render withdraw page")
-  // const [printMode, setPrintMode] = useState(false)
 
   const print = () => {
-    // setPrintMode(true)
-    // setPrintMode(() => {
     window.print()
-    // return false
-    // })
   }
 
   const seed = () => {

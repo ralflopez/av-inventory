@@ -3,7 +3,6 @@ import { getProductsRealtime } from "../firebase/products"
 import { Product } from "../firebase/types"
 
 export const useRealtimeProducts = () => {
-  console.log("render hook useRealtimeprod")
   const [rows, setRows] = useState<Product[]>([])
 
   useEffect(() => {
