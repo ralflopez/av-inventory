@@ -14,30 +14,35 @@ export const FONT_SIZES = {
     body: 10,
     items: 6.5,
     spacing: 4,
+    columnPadding: 0,
   },
   gte70: {
     heading: 15,
     body: 9,
     items: 7,
     spacing: 4,
+    columnPadding: 0,
   },
   gte52: {
     heading: 15,
     body: 10,
     items: 8,
     spacing: 4,
+    columnPadding: 1,
   },
   gte21: {
     heading: 17,
     body: 12,
     items: 10,
     spacing: 4,
+    columnPadding: 2,
   },
   gte1: {
     heading: 19,
     body: 14,
     items: 12,
     spacing: 4,
+    columnPadding: 2,
   },
 }
 

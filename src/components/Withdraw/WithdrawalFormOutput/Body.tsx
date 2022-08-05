@@ -15,7 +15,6 @@ import {
   WithdrawFormState,
 } from "../../../store/withdrawForm"
 import { FontSizeContext } from "./WithdrawalForm"
-const COLUMN_PADDING = 0
 
 export const Body = () => {
   const theme: any = useTheme()
@@ -64,6 +63,7 @@ export const Body = () => {
                   padding='none'
                   sx={{
                     fontSize: `${font.items + 1}pt`,
+                    padding: `${font.columnPadding}pt`,
                     paddingRight: "3pt",
                     fontWeight: "bold",
                     paddingLeft: "5pt",
@@ -88,6 +88,7 @@ export const Body = () => {
                   width={`${(font.items + 1) * 4}pt`}
                   sx={{
                     fontSize: `${font.items + 1}pt`,
+                    padding: `${font.columnPadding}pt`,
                     paddingRight: `${font.spacing}pt`,
                   }}
                 >
@@ -98,6 +99,7 @@ export const Body = () => {
                   padding='none'
                   width={`${(font.items + 1) * 4}pt`}
                   sx={{
+                    padding: `${font.columnPadding}pt`,
                     fontSize: `${font.items + 1}pt`,
                     paddingRight: `${font.spacing}pt`,
                   }}
@@ -121,7 +123,7 @@ export const Body = () => {
                   <TableCell
                     padding='none'
                     style={{
-                      padding: COLUMN_PADDING,
+                      padding: `${font.columnPadding}pt`,
                       paddingLeft: "5pt",
                     }}
                   >
@@ -132,7 +134,7 @@ export const Body = () => {
                   <TableCell
                     align='center'
                     style={{
-                      padding: COLUMN_PADDING,
+                      padding: `${font.columnPadding}pt`,
                     }}
                   >
                     <Typography fontSize={`${font.items}pt`}>
@@ -142,7 +144,7 @@ export const Body = () => {
                   <TableCell
                     align='center'
                     style={{
-                      padding: COLUMN_PADDING,
+                      padding: `${font.columnPadding}pt`,
                     }}
                   >
                     <Typography fontSize={`${font.items}pt`}>
@@ -152,7 +154,7 @@ export const Body = () => {
                   <TableCell
                     align='center'
                     style={{
-                      padding: COLUMN_PADDING,
+                      padding: `${font.columnPadding}pt`,
                     }}
                   >
                     <Typography fontSize={`${font.items}pt`}>
