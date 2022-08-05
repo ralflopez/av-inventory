@@ -9,7 +9,6 @@ import { EditProductsDrawer } from "./EditProductsDrawer"
 import { useRealtimeProducts } from "../../hooks/useRealtimeProducts"
 
 const columns: GridColDef[] = [
-  { field: "id", headerName: "ID" },
   { field: "brand", headerName: "Brand", width: 200 },
   { field: "name", headerName: "Name", minWidth: 250 },
   {
@@ -123,6 +122,7 @@ export const ProductsPage = () => {
             columns={columns}
             pageSize={8}
             rowsPerPageOptions={[8]}
+            getRowId={(row) => row.id}
             checkboxSelection
             onSelectionModelChange={(ids) => {
               setSelectedRows(ids.map((id) => id.toString()))
