@@ -9,7 +9,20 @@ import { EditProductsDrawer } from "./EditProductsDrawer"
 import { useRealtimeProducts } from "../../hooks/useRealtimeProducts"
 
 const columns: GridColDef[] = [
-  { field: "brand", headerName: "Brand", width: 200 },
+  {
+    field: "brand",
+    headerName: "Brand",
+    width: 200,
+    renderCell(params) {
+      return (
+        <Typography
+          sx={{ color: !params.row.isPublished ? "dodgerblue" : "black" }}
+        >
+          {params.row.brand}
+        </Typography>
+      )
+    },
+  },
   { field: "name", headerName: "Name", minWidth: 250 },
   {
     field: "size",
