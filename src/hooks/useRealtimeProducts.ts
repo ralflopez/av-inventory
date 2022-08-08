@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react"
 import { getProductsRealtime } from "../firebase/products"
-import { Product } from "../firebase/types"
+import { ProductWithPublished } from "../firebase/types"
 
 export const useRealtimeProducts = () => {
-  const [rows, setRows] = useState<Product[]>([])
+  const [rows, setRows] = useState<ProductWithPublished[]>([])
 
   useEffect(() => {
     const unsub = getProductsRealtime((snapshot) => {
-      let newRows: Product[] = []
+      let newRows: ProductWithPublished[] = []
 
       snapshot.docChanges().forEach(({ doc, type }) => {
+        const source = snapshot.metadata.fromCache ? "local" : "server"
         if (type === "added") {
           const { brand, name, packaging, size } = doc.data()
 
@@ -22,6 +23,7 @@ export const useRealtimeProducts = () => {
               packaging,
               size,
               quantity: 0,
+              isPublished: source === "server",
             })
             return newRows
           })
@@ -38,6 +40,7 @@ export const useRealtimeProducts = () => {
               packaging,
               size,
               quantity: 0,
+              isPublished: source === "server",
             }
             return newRows
           })
