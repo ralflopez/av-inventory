@@ -48,18 +48,6 @@ export const useWithdrawFormStore = create<WithdrawFormState>((set, get) => ({
       ...state,
       storeName: "",
       storeAddress: "",
-      salesman: {
-        firstName: "",
-        id: "",
-        lastName: "",
-        type: EmployeeType.SALESMAN,
-      },
-      warehouseInCharge: {
-        firstName: "",
-        id: "",
-        lastName: "",
-        type: EmployeeType.WAREHOUSE_IN_CHARGE,
-      },
       poNo: "",
       rows: [],
     })),

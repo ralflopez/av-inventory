@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   CircularProgress,
+  IconButton,
   Snackbar,
   Typography,
 } from "@mui/material"
@@ -16,6 +17,7 @@ import {
 import { BodyContainer } from "../Layout"
 import { Datagrid } from "./Datagrid"
 import { StoreInput } from "./StoreInput"
+import RestartAltIcon from "@mui/icons-material/RestartAlt"
 
 export const WithdrawPage = () => {
   const [commitStatus, setCommitStatus] = useState<
@@ -101,6 +103,9 @@ export const WithdrawPage = () => {
         <Box>
           <Typography variant='h4' gutterBottom>
             Withdrawal Form
+            <IconButton onClick={reset}>
+              <RestartAltIcon />
+            </IconButton>
           </Typography>
         </Box>
         <StoreInput />
