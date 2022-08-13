@@ -62,7 +62,7 @@ export interface WithdrawTransaction {
   timestamp: any // firebase timestamp
   branch: Branch
   store: Store
-  date: string
+  date?: string
   po_no: string
   salesman: string
   warehouse_incharge: string

@@ -1,7 +1,14 @@
-import { Box, Button, Typography } from "@mui/material"
-import { brands } from "../../constants/products"
-import { addProduct } from "../../firebase/products"
+import {
+  Alert,
+  Box,
+  Button,
+  CircularProgress,
+  Snackbar,
+  Typography,
+} from "@mui/material"
+import { useState } from "react"
 import { useRealtimeProducts } from "../../hooks/useRealtimeProducts"
+import { useBranchStore } from "../../store/branchStore"
 import {
   useWithdrawFormStore,
   WithdrawFormState,
@@ -11,12 +18,33 @@ import { Datagrid } from "./Datagrid"
 import { StoreInput } from "./StoreInput"
 
 export const WithdrawPage = () => {
+  const [commitStatus, setCommitStatus] = useState<
+    "success" | "failed" | "loading" | ""
+  >("")
   const data = useRealtimeProducts()
-  const { rows: withdrawFormRows, setRows: setWithdrawFormRows } =
-    useWithdrawFormStore<WithdrawFormState>((state: any) => state)
+  const {
+    rows: withdrawFormRows,
+    setRows: setWithdrawFormRows,
+    addWithdrawTransaction,
+  } = useWithdrawFormStore<WithdrawFormState>((state: any) => state)
+  const branch = useBranchStore()
 
   const print = () => {
     window.print()
+  }
+
+  const commit = () => {
+    if (window.confirm(`Are you sure you want to continue`)) {
+      setCommitStatus("loading")
+      addWithdrawTransaction({
+        address: branch.address,
+        contact_no: branch.contact_no,
+        email: branch.email,
+        name: branch.name,
+      })
+        .then(() => setCommitStatus("success"))
+        .catch(() => setCommitStatus("failed"))
+    }
   }
 
   // const seed = () => {
@@ -37,6 +65,34 @@ export const WithdrawPage = () => {
 
   return (
     <>
+      <Snackbar
+        open={commitStatus !== "" && commitStatus !== "loading"}
+        autoHideDuration={6000}
+        onClose={() => setCommitStatus("")}
+      >
+        <div>
+          {commitStatus === "success" && (
+            <Alert
+              onClose={() => setCommitStatus("")}
+              severity='success'
+              variant='filled'
+              sx={{ width: "100%" }}
+            >
+              Commit Successful
+            </Alert>
+          )}
+          {commitStatus === "failed" && (
+            <Alert
+              onClose={() => setCommitStatus("")}
+              severity='error'
+              variant='filled'
+              sx={{ width: "100%" }}
+            >
+              Commit Failed
+            </Alert>
+          )}
+        </div>
+      </Snackbar>
       <BodyContainer>
         <Box>
           <Typography variant='h4' gutterBottom>
@@ -50,10 +106,20 @@ export const WithdrawPage = () => {
           setWithdrawFormRows={setWithdrawFormRows}
         />
         <Box mt={3}>
-          <Button variant='contained' color='primary' onClick={print}>
-            Print
-          </Button>
-          {/* <Button onClick={seed}>Seed</Button> */}
+          {commitStatus === "loading" ? (
+            <CircularProgress />
+          ) : (
+            <>
+              <Box mr={1} component='span'>
+                <Button variant='contained' color='primary' onClick={commit}>
+                  Commit
+                </Button>
+              </Box>
+              <Button variant='outlined' color='secondary' onClick={print}>
+                Preview
+              </Button>
+            </>
+          )}
         </Box>
       </BodyContainer>
     </>

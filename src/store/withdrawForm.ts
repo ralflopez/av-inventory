@@ -1,5 +1,11 @@
+import { Timestamp } from "firebase/firestore"
 import create from "zustand"
-import { WithdrawTransactionProduct } from "../firebase/types"
+import { addWithdrawTransaction as firebaseAddWithdrawTransaction } from "../firebase/transaction"
+import {
+  Branch,
+  TransactionType,
+  WithdrawTransactionProduct,
+} from "../firebase/types"
 
 export interface WithdrawFormState {
   storeName: string
@@ -14,9 +20,10 @@ export interface WithdrawFormState {
   setSalesman: (name: string) => void
   setWarehouseInCharge: (name: string) => void
   setPoNo: (poNo: string) => void
+  addWithdrawTransaction: (branch: Branch) => Promise<void>
 }
 
-export const useWithdrawFormStore = create<WithdrawFormState>((set) => ({
+export const useWithdrawFormStore = create<WithdrawFormState>((set, get) => ({
   storeName: "",
   storeAddress: "",
   salesman: "",
@@ -33,4 +40,20 @@ export const useWithdrawFormStore = create<WithdrawFormState>((set) => ({
   setWarehouseInCharge: (name: string) =>
     set((state) => ({ ...state, warehouseInCharge: name })),
   setPoNo: (poNo: string) => set((state) => ({ ...state, poNo })),
+  addWithdrawTransaction: async (branch: Branch) => {
+    const state = get()
+    await firebaseAddWithdrawTransaction({
+      branch,
+      timestamp: Timestamp.now(),
+      po_no: state.poNo,
+      products: state.rows,
+      salesman: state.salesman,
+      store: {
+        address: state.storeAddress,
+        name: state.storeName,
+      },
+      type: TransactionType.withdraw,
+      warehouse_incharge: state.warehouseInCharge,
+    })
+  },
 }))
