@@ -57,7 +57,9 @@ export const useWithdrawFormStore = create<WithdrawFormState>((set, get) => ({
       branch,
       timestamp: Timestamp.now(),
       po_no: state.poNo,
-      products: state.rows,
+      products: state.rows.filter(
+        (row) => row.cs !== 0 || row.free !== 0 || row.pck !== 0
+      ),
       salesman: state.salesman,
       store: {
         address: state.storeAddress,
