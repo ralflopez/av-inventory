@@ -7,6 +7,7 @@ import CssBaseline from "@mui/material/CssBaseline"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { MainAppBar } from "./components/Layout/MainAppBar"
 import { ProductsPage } from "./components/Products/ProductsPage"
+import { WithdrawTransactionPage } from "./components/Transaction/Withdraw/WithdrawTransactionPage"
 import { WithdrawalForm } from "./components/Withdraw/WithdrawalFormOutput/WithdrawalForm"
 import { WithdrawPage } from "./components/Withdraw/WithdrawPage"
 
@@ -29,6 +30,10 @@ export default function ResponsiveDrawer() {
           <Route path='/' element={<Navigate to='/withdraw' replace />} />
           <Route path='/withdraw' element={<WithdrawPage />} />
           <Route path='/products' element={<ProductsPage />} />
+          <Route
+            path='/transactions/withdraw'
+            element={<WithdrawTransactionPage />}
+          />
         </Routes>
       </Box>
     </BrowserRouter>

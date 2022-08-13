@@ -58,6 +58,7 @@ export interface WithdrawTransactionProduct {
 }
 
 export interface WithdrawTransaction {
+  id: string
   type: TransactionType.withdraw
   timestamp: any // firebase timestamp
   branch: Branch

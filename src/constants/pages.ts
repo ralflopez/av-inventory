@@ -13,4 +13,8 @@ export const infoPages = [
     name: "Products",
     path: "/products",
   },
+  {
+    name: "Withdraw Transactions",
+    path: "/transactions/withdraw",
+  },
 ]
