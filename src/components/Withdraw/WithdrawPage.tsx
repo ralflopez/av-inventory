@@ -6,7 +6,7 @@ import {
   Snackbar,
   Typography,
 } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRealtimeProducts } from "../../hooks/useRealtimeProducts"
 import { useBranchStore } from "../../store/branchStore"
 import {
@@ -26,6 +26,7 @@ export const WithdrawPage = () => {
     rows: withdrawFormRows,
     setRows: setWithdrawFormRows,
     addWithdrawTransaction,
+    reset,
   } = useWithdrawFormStore<WithdrawFormState>((state: any) => state)
   const branch = useBranchStore()
 
@@ -42,7 +43,10 @@ export const WithdrawPage = () => {
         email: branch.email,
         name: branch.name,
       })
-        .then(() => setCommitStatus("success"))
+        .then(() => {
+          setCommitStatus("success")
+          reset()
+        })
         .catch(() => setCommitStatus("failed"))
     }
   }

@@ -14,6 +14,7 @@ export interface WithdrawFormState {
   warehouseInCharge: string
   poNo: string
   rows: WithdrawTransactionProduct[]
+  reset: () => void
   setStoreName: (name: string) => void
   setStoreAddress: (address: string) => void
   setRows: (rows: WithdrawTransactionProduct[]) => void
@@ -30,6 +31,16 @@ export const useWithdrawFormStore = create<WithdrawFormState>((set, get) => ({
   warehouseInCharge: "",
   poNo: "",
   rows: [],
+  reset: () =>
+    set((state) => ({
+      ...state,
+      storeName: "",
+      storeAddress: "",
+      salesman: "",
+      warehouseInCharge: "",
+      poNo: "",
+      rows: [],
+    })),
   setStoreName: (name: string) =>
     set((state) => ({ ...state, storeName: name })),
   setStoreAddress: (address: string) =>

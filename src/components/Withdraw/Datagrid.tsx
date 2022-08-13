@@ -2,6 +2,7 @@ import {
   DataGrid,
   GridCellEditCommitParams,
   GridColDef,
+  GridInputSelectionModel,
   GridSelectionModel,
 } from "@mui/x-data-grid"
 import React, { useCallback, useEffect, useState } from "react"
@@ -129,6 +130,7 @@ export const Datagrid = React.memo(
           }}
           pageSize={10}
           rowsPerPageOptions={[10, 20, 30, 40, 50, 60, 70, 80, 100]}
+          selectionModel={withdrawFormRows.map((row) => row.product.id)}
           onSelectionModelChange={onSelectionModelChange}
           onCellEditCommit={onCellEditCommit}
         />
