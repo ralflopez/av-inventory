@@ -1,5 +1,5 @@
 import { Formik } from "formik"
-import { Employee, EmployeeType, EmployeeWithID } from "../../firebase/types"
+import { EmployeeType, EmployeeWithID } from "../../firebase/types"
 import { Box } from "@mui/system"
 import {
   Button,
@@ -34,13 +34,14 @@ export const EmployeeForm = ({
       validate={(values) => {
         const errors: Record<string, any> = {}
         Object.keys(values).forEach((key) => {
-          if (!values[key as keyof typeof values]) errors[key] = "Required"
+          if (!values[key as keyof typeof values] && key !== "id")
+            errors[key] = "Required"
         })
         return errors
       }}
       onSubmit={async (values, { setSubmitting }) => {
         setSubmitting(true)
-        await action(values as EmployeeWithID)
+        await action(values)
           .finally(() => setSubmitting(false))
           .finally(() => toggle())
       }}
