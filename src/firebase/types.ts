@@ -25,7 +25,7 @@ export interface Store {
 // Employee
 export enum EmployeeType {
   SALESMAN = "Salesman",
-  WAREHOUSE_INCHARGE = "Warehouse Inchagrge",
+  WAREHOUSE_IN_CHARGE = "Warehouse In Charge",
 }
 
 export interface Employee {
