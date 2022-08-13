@@ -5,6 +5,7 @@ import "@fontsource/roboto/700.css"
 import Box from "@mui/material/Box"
 import CssBaseline from "@mui/material/CssBaseline"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
+import { EmployeePage } from "./components/Employee/EmployeePage"
 import { MainAppBar } from "./components/Layout/MainAppBar"
 import { ProductsPage } from "./components/Products/ProductsPage"
 import { WithdrawTransactionPage } from "./components/Transaction/Withdraw/WithdrawTransactionPage"
@@ -30,6 +31,7 @@ export default function ResponsiveDrawer() {
           <Route path='/' element={<Navigate to='/withdraw' replace />} />
           <Route path='/withdraw' element={<WithdrawPage />} />
           <Route path='/products' element={<ProductsPage />} />
+          <Route path='/employees' element={<EmployeePage />} />
           <Route
             path='/transactions/withdraw'
             element={<WithdrawTransactionPage />}

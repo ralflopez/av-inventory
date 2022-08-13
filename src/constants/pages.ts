@@ -17,4 +17,8 @@ export const infoPages = [
     name: "Withdrawals",
     path: "/transactions/withdraw",
   },
+  {
+    name: "Employees",
+    path: "/employees",
+  },
 ]

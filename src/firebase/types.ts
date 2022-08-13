@@ -22,10 +22,20 @@ export interface Store {
   address: string
 }
 
-// Salesman
-export interface Salesman {
+// Employee
+export enum EmployeeType {
+  SALESMAN = "Salesman",
+  WAREHOUSE_INCHARGE = "Warehouse Inchagrge",
+}
+
+export interface Employee {
+  firstName: string
+  lastName: string
+  type: EmployeeType
+}
+
+export interface EmployeeWithID extends Employee {
   id: string
-  name: string
 }
 
 // Product
