@@ -21,8 +21,8 @@ export const CrudTable = ({
       <DataGrid
         rows={rows}
         columns={columns}
-        pageSize={8}
-        rowsPerPageOptions={[8]}
+        pageSize={100}
+        rowsPerPageOptions={[100]}
         getRowId={(row) => row.id}
         checkboxSelection
         onSelectionModelChange={(ids) => {

@@ -128,8 +128,8 @@ export const Datagrid = React.memo(
           getRowId={(row) => {
             return row.product.id
           }}
-          pageSize={10}
-          rowsPerPageOptions={[10, 20, 30, 40, 50, 60, 70, 80, 100]}
+          pageSize={30}
+          rowsPerPageOptions={[30]}
           selectionModel={withdrawFormRows.map((row) => row.product.id)}
           onSelectionModelChange={onSelectionModelChange}
           onCellEditCommit={onCellEditCommit}
