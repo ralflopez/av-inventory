@@ -38,9 +38,9 @@ export interface Product {
   size: string
 }
 
-export interface ProductWithPublished extends Product {
-  isPublished: boolean
-}
+// export interface ProductWithPublished extends Product {
+//   isPublished: boolean
+// }
 
 export interface ProductCount {
   product: Product
