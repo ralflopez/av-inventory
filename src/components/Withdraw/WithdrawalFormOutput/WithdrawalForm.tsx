@@ -74,7 +74,7 @@ export const WithdrawalForm = () => {
         sx={{
           "@page": {
             // size: "letter",
-            margin: 0,
+            margin: "2in 1in",
           },
           "@media print": {
             display: "flex",
