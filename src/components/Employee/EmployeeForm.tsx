@@ -15,9 +15,7 @@ import {
 
 interface Props {
   actionName: string
-  action:
-    | ((employee: Employee) => Promise<any>)
-    | ((employee: EmployeeWithID) => Promise<any>)
+  action: (employee: EmployeeWithID) => Promise<any>
   toggle: () => void
   initialValues: EmployeeWithID
 }
