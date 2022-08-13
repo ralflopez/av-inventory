@@ -62,7 +62,7 @@ export const EmployeeForm = ({
           </Typography>
           <Box mb={2} mt={2}>
             <FormControl fullWidth>
-              <InputLabel id='brand-label'>Brand</InputLabel>
+              <InputLabel id='type-label'>Type</InputLabel>
               <Select
                 fullWidth
                 labelId='type-label'
