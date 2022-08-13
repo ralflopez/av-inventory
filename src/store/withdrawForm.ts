@@ -65,7 +65,7 @@ export const useWithdrawFormStore = create<WithdrawFormState>((set, get) => ({
         address: state.storeAddress,
         name: state.storeName,
       },
-      type: TransactionType.withdraw,
+      type: TransactionType.WITHDRAW,
       warehouse_incharge: state.warehouseInCharge,
     })
   },

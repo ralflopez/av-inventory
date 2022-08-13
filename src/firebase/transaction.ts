@@ -20,7 +20,7 @@ export const getWithdrawTransactionsRealtime = (
     return onSnapshot(
       query(
         collection(db, collectionType.TRANSACTIONS),
-        where("type", "==", TransactionType.withdraw),
+        where("type", "==", TransactionType.WITHDRAW),
         orderBy("timestamp", "desc")
       ),
       (collection) => callback(collection)
