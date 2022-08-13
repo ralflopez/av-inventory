@@ -58,7 +58,6 @@ export interface WithdrawTransactionProduct {
 }
 
 export interface WithdrawTransaction {
-  id: string
   type: TransactionType.withdraw
   timestamp: any // firebase timestamp
   branch: Branch
@@ -71,6 +70,10 @@ export interface WithdrawTransaction {
   date_delivered?: string
   driver?: string
   plate_no?: string
+}
+
+export interface WithdrawTransactionWithID extends WithdrawTransaction {
+  id: string
 }
 
 export enum TransactionType {

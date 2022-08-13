@@ -21,7 +21,7 @@ export const getWithdrawTransactionsRealtime = (
       query(
         collection(db, collectionType.TRANSACTIONS),
         where("type", "==", TransactionType.withdraw),
-        orderBy("id", "desc")
+        orderBy("timestamp", "desc")
       ),
       (collection) => callback(collection)
     )
@@ -32,7 +32,7 @@ export const getWithdrawTransactionsRealtime = (
 }
 
 export const addWithdrawTransaction = async (
-  withdrawTransaction: WithdrawTransaction
+  withdrawTransaction: Omit<WithdrawTransaction, "id">
 ) => {
   await addDoc(collection(db, collectionType.TRANSACTIONS), withdrawTransaction)
 }

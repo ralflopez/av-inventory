@@ -54,7 +54,6 @@ export const useWithdrawFormStore = create<WithdrawFormState>((set, get) => ({
   addWithdrawTransaction: async (branch: Branch) => {
     const state = get()
     await firebaseAddWithdrawTransaction({
-      id: "",
       branch,
       timestamp: Timestamp.now(),
       po_no: state.poNo,

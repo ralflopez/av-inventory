@@ -1,21 +1,30 @@
 import { useEffect, useState } from "react"
 import { getWithdrawTransactionsRealtime } from "../firebase/transaction"
-import { WithdrawTransaction } from "../firebase/types"
+import {
+  WithdrawTransaction,
+  WithdrawTransactionWithID,
+} from "../firebase/types"
 
 export const useRealtimeWithdrawTransactions = () => {
-  const [rows, setRows] = useState<WithdrawTransaction[]>([])
+  console.log("realtime transaction")
+  const [rows, setRows] = useState<WithdrawTransactionWithID[]>([])
 
   useEffect(() => {
     const unsub = getWithdrawTransactionsRealtime((snapshot) => {
-      let newRows: WithdrawTransaction[] = []
-
+      let newRows: WithdrawTransactionWithID[] = []
+      console.log("listened")
+      console.log(snapshot.docChanges())
       snapshot.docChanges().forEach(({ doc, type }) => {
         if (type === "added") {
+          console.log("added")
           const data = doc.data() as WithdrawTransaction
-
+          console.log(data)
           setRows((currentRows) => {
             newRows = [...currentRows]
-            newRows.push(data)
+            newRows.push({
+              id: doc.id,
+              ...data,
+            })
             return newRows
           })
         }
@@ -24,7 +33,10 @@ export const useRealtimeWithdrawTransactions = () => {
             newRows = [...currentRows]
             const data = doc.data() as WithdrawTransaction
             const index = currentRows.findIndex((r) => r.id === doc.id)
-            newRows[index] = data
+            newRows[index] = {
+              id: doc.id,
+              ...data,
+            }
             return newRows
           })
         }
