@@ -21,7 +21,10 @@ export const Footer = () => {
       <Box display='flex' justifyContent='space-between'>
         <Box>
           <Typography fontSize={`${font.body}pt`}>
-            Salesman: <Typography component='span'>{salesman}</Typography>
+            Salesman:{" "}
+            <Typography component='span'>
+              {salesman.firstName + " " + salesman.lastName}
+            </Typography>
           </Typography>
           <Typography fontSize={`${font.body}pt`}>
             Driver Name & Signature: _______________
@@ -38,7 +41,7 @@ export const Footer = () => {
               fontSize={`${font.body}pt`}
               sx={{ textDecoration: "underline" }}
             >
-              {warehouseInCharge}
+              {warehouseInCharge.firstName + " " + warehouseInCharge.lastName}
             </Typography>
           </Typography>
           <Typography fontSize={`${font.body}pt`}>

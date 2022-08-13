@@ -74,8 +74,8 @@ export interface WithdrawTransaction {
   store: Store
   date?: string
   po_no: string
-  salesman: string
-  warehouse_incharge: string
+  salesman: EmployeeWithID
+  warehouse_incharge: EmployeeWithID
   products: WithdrawTransactionProduct[]
   date_delivered?: string
   driver?: string

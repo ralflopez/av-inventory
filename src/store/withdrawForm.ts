@@ -5,21 +5,23 @@ import {
   Branch,
   TransactionType,
   WithdrawTransactionProduct,
+  EmployeeWithID,
+  EmployeeType,
 } from "../firebase/types"
 
 export interface WithdrawFormState {
   storeName: string
   storeAddress: string
-  salesman: string
-  warehouseInCharge: string
+  salesman: EmployeeWithID
+  warehouseInCharge: EmployeeWithID
   poNo: string
   rows: WithdrawTransactionProduct[]
   reset: () => void
   setStoreName: (name: string) => void
   setStoreAddress: (address: string) => void
   setRows: (rows: WithdrawTransactionProduct[]) => void
-  setSalesman: (name: string) => void
-  setWarehouseInCharge: (name: string) => void
+  setSalesman: (name: EmployeeWithID) => void
+  setWarehouseInCharge: (name: EmployeeWithID) => void
   setPoNo: (poNo: string) => void
   addWithdrawTransaction: (branch: Branch) => Promise<void>
 }
@@ -27,8 +29,18 @@ export interface WithdrawFormState {
 export const useWithdrawFormStore = create<WithdrawFormState>((set, get) => ({
   storeName: "",
   storeAddress: "",
-  salesman: "",
-  warehouseInCharge: "",
+  salesman: {
+    id: "",
+    firstName: "",
+    lastName: "",
+    type: EmployeeType.SALESMAN,
+  },
+  warehouseInCharge: {
+    id: "",
+    firstName: "",
+    lastName: "",
+    type: EmployeeType.WAREHOUSE_IN_CHARGE,
+  },
   poNo: "",
   rows: [],
   reset: () =>
@@ -36,8 +48,18 @@ export const useWithdrawFormStore = create<WithdrawFormState>((set, get) => ({
       ...state,
       storeName: "",
       storeAddress: "",
-      salesman: "",
-      warehouseInCharge: "",
+      salesman: {
+        firstName: "",
+        id: "",
+        lastName: "",
+        type: EmployeeType.SALESMAN,
+      },
+      warehouseInCharge: {
+        firstName: "",
+        id: "",
+        lastName: "",
+        type: EmployeeType.WAREHOUSE_IN_CHARGE,
+      },
       poNo: "",
       rows: [],
     })),
@@ -47,9 +69,13 @@ export const useWithdrawFormStore = create<WithdrawFormState>((set, get) => ({
     set((state) => ({ ...state, storeAddress: address })),
   setRows: (rows: WithdrawTransactionProduct[]) =>
     set((state) => ({ ...state, rows })),
-  setSalesman: (name: string) => set((state) => ({ ...state, salesman: name })),
-  setWarehouseInCharge: (name: string) =>
-    set((state) => ({ ...state, warehouseInCharge: name })),
+  setSalesman: (salesman: EmployeeWithID) =>
+    set((state) => ({ ...state, salesman })),
+  setWarehouseInCharge: (warehouseInCharge: EmployeeWithID) =>
+    set((state) => ({
+      ...state,
+      warehouseInCharge,
+    })),
   setPoNo: (poNo: string) => set((state) => ({ ...state, poNo })),
   addWithdrawTransaction: async (branch: Branch) => {
     const state = get()
