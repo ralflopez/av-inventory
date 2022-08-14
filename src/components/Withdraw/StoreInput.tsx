@@ -60,6 +60,7 @@ export const StoreInput = () => {
             // md: "inline-block",
           }}
           sx={{ flex: 1 }}
+          width='100%'
         >
           <TextField
             fullWidth
@@ -77,6 +78,7 @@ export const StoreInput = () => {
             // md: "inline-block",
           }}
           sx={{ flex: 1 }}
+          width='100%'
         >
           <TextField
             variant='outlined'
@@ -109,7 +111,7 @@ export const StoreInput = () => {
       <Typography variant='subtitle1' gutterBottom>
         Person In Charge
       </Typography>
-      <Box display='flex'>
+      <Box>
         <Box
           mr={2}
           mb={3}
