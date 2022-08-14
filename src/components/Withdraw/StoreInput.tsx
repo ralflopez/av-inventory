@@ -2,11 +2,8 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
-  InputLabel,
-  MenuItem,
   Radio,
   RadioGroup,
-  Select,
   TextField,
   Typography,
 } from "@mui/material"
@@ -20,7 +17,6 @@ import {
 } from "../../store/withdrawForm"
 
 export const StoreInput = () => {
-  console.log("render store input")
   const {
     storeName,
     setStoreName,

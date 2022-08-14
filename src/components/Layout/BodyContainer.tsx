@@ -1,6 +1,5 @@
 import { Toolbar } from "@mui/material"
 import { Box } from "@mui/system"
-import React from "react"
 import { drawerWidth } from "../../constants"
 
 export const BodyContainer = ({ children }: any) => {

@@ -10,7 +10,6 @@ import {
   DataGrid,
   GridCellEditCommitParams,
   GridColDef,
-  GridInputSelectionModel,
   GridSelectionModel,
 } from "@mui/x-data-grid"
 import React, { useCallback, useEffect, useState } from "react"
@@ -93,7 +92,6 @@ export const Datagrid = React.memo(
     const [rows, setRows] = useState<WithdrawTransaction["products"]>([])
 
     useEffect(() => {
-      console.log("new data")
       const newRows = data.map(
         (product) =>
           ({

@@ -93,16 +93,6 @@ export const ProductForm = ({
       <Typography variant='h5' gutterBottom>
         {title}
       </Typography>
-      {/* <Box mb={2} mt={2}>
-        <TextField
-          error={errors["brand"]}
-          fullWidth
-          variant='outlined'
-          label='Brand'
-          value={brand}
-          onChange={(e) => setBrand(e.target.value)}
-        />
-      </Box> */}
       <Box mb={2} mt={2}>
         <FormControl fullWidth>
           <InputLabel id='brand-label'>Brand</InputLabel>

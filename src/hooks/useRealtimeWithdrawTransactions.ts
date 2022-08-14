@@ -6,19 +6,14 @@ import {
 } from "../firebase/types"
 
 export const useRealtimeWithdrawTransactions = () => {
-  console.log("realtime transaction")
   const [rows, setRows] = useState<WithdrawTransactionWithID[]>([])
 
   useEffect(() => {
     const unsub = getWithdrawTransactionsRealtime((snapshot) => {
       let newRows: WithdrawTransactionWithID[] = []
-      console.log("listened")
-      console.log(snapshot.docChanges())
       snapshot.docChanges().forEach(({ doc, type }) => {
         if (type === "added") {
-          console.log("added")
           const data = doc.data() as WithdrawTransaction
-          console.log(data)
           setRows((currentRows) => {
             newRows = [...currentRows]
             newRows.push({
@@ -29,7 +24,6 @@ export const useRealtimeWithdrawTransactions = () => {
           })
         }
         if (type === "modified") {
-          console.log("modified")
           setRows((currentRows) => {
             newRows = [...currentRows]
             const data = doc.data() as WithdrawTransaction
@@ -42,7 +36,6 @@ export const useRealtimeWithdrawTransactions = () => {
           })
         }
         if (type === "removed") {
-          console.log("removed")
           setRows((currentRows) => currentRows.filter((r) => r.id !== doc.id))
         }
       })

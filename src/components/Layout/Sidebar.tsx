@@ -1,7 +1,4 @@
 import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
   Divider,
   List,
   ListItem,
@@ -12,10 +9,8 @@ import {
   Typography,
   useTheme,
 } from "@mui/material"
-import { Box } from "@mui/system"
 import { useNavigate, useLocation } from "react-router-dom"
 import { featurePages, infoPages } from "../../constants"
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 
 export const Sidebar = () => {
   const navigate = useNavigate()

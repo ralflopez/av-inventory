@@ -3,13 +3,10 @@ import {
   Box,
   Button,
   CircularProgress,
-  Dialog,
-  DialogTitle,
   IconButton,
   Snackbar,
   Typography,
 } from "@mui/material"
-import { useEffect, useState } from "react"
 import { useRealtimeProducts } from "../../hooks/useRealtimeProducts"
 import { useBranchStore } from "../../store/branchStore"
 import {
@@ -20,7 +17,7 @@ import { BodyContainer } from "../Layout"
 import { Datagrid } from "./Datagrid"
 import { StoreInput } from "./StoreInput"
 import RestartAltIcon from "@mui/icons-material/RestartAlt"
-import CloseIcon from "@mui/icons-material/Close"
+import { useState } from "react"
 
 export const WithdrawPage = () => {
   const [commitStatus, setCommitStatus] = useState<
@@ -60,22 +57,6 @@ export const WithdrawPage = () => {
         .catch(() => setCommitStatus("failed"))
     }
   }
-
-  // const seed = () => {
-  //   const count = [6, 3, 12, 3, 5, 3, 1, 30, 5, 8, 13, 13, 12]
-  //   brands.forEach((brand, idx) => {
-  //     for (let i = 0; i < count[idx]; i++) {
-  //       addProduct({
-  //         id: "",
-  //         brand,
-  //         name: "Cherub Protective Mask KN95",
-  //         packaging: "5 x 100",
-  //         size: "",
-  //         quantity: 0,
-  //       })
-  //     }
-  //   })
-  // }
 
   return (
     <>
@@ -117,22 +98,6 @@ export const WithdrawPage = () => {
           </Typography>
         </Box>
         <StoreInput />
-        {/* <Dialog
-          open={isProductsOpen}
-          onClose={toggleProductsTable}
-          fullWidth
-          maxWidth='lg'
-        >
-          <DialogTitle
-            display='flex'
-            justifyContent='space-between'
-            alignItems='center'
-          >
-            Products
-            <IconButton onClick={toggleProductsTable}>
-              <CloseIcon />
-            </IconButton>
-          </DialogTitle> */}
         <Datagrid
           data={data}
           withdrawFormRows={withdrawFormRows}
@@ -140,7 +105,6 @@ export const WithdrawPage = () => {
           open={isProductsOpen}
           toggle={toggleProductsTable}
         />
-        {/* </Dialog> */}
         <Box mt={4}>
           {commitStatus === "loading" ? (
             <CircularProgress />

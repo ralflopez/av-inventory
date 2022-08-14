@@ -1,5 +1,4 @@
 import { GridColDef } from "@mui/x-data-grid"
-import React from "react"
 import { useRealtimeWithdrawTransactions } from "../../../hooks/useRealtimeWithdrawTransactions"
 import { BodyContainer } from "../../Layout"
 

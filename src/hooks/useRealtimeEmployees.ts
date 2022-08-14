@@ -3,7 +3,6 @@ import { getEmployeesRealtime } from "../firebase/employee"
 import { Employee, EmployeeWithID } from "../firebase/types"
 
 export const useRealtimeEmployees = () => {
-  console.log("realtime transaction")
   const [rows, setRows] = useState<EmployeeWithID[]>([])
 
   useEffect(() => {

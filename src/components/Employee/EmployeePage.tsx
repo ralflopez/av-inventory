@@ -1,5 +1,4 @@
 import { GridColDef } from "@mui/x-data-grid"
-import React from "react"
 import { deleteEmployee } from "../../firebase/employee"
 import { useRealtimeEmployees } from "../../hooks/useRealtimeEmployees"
 import { CrudPage } from "../Layout/Pages/CrudPage"
