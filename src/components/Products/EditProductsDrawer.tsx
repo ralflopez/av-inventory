@@ -1,7 +1,7 @@
 import { Drawer } from "@mui/material"
 import { useEffect, useState } from "react"
 import { editProduct, getProduct } from "../../firebase/products"
-import { Product, ProductWithID } from "../../firebase/types"
+import { ProductWithID } from "../../firebase/types"
 import { ProductForm } from "./ProductForm"
 
 interface Props {
