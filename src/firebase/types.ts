@@ -1,3 +1,5 @@
+import { Timestamp } from "firebase/firestore"
+
 // Branch
 export interface Branch {
   name: string
@@ -45,7 +47,6 @@ export interface Product {
   packaging: string
   quantity: number
   size: string
-  // isPrinted: string
 }
 
 export interface ProductWithID extends Product {
@@ -76,7 +77,6 @@ export interface WithdrawTransaction {
   timestamp: any // firebase timestamp
   branch: Branch
   store: Store
-  date?: string
   po_no: string
   salesman: EmployeeWithID
   warehouse_incharge: EmployeeWithID
@@ -84,6 +84,7 @@ export interface WithdrawTransaction {
   date_delivered?: string
   driver?: string
   plate_no?: string
+  last_printed: Timestamp | null
 }
 
 export interface WithdrawTransactionWithID extends WithdrawTransaction {

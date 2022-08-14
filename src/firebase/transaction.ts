@@ -32,7 +32,7 @@ export const getWithdrawTransactionsRealtime = (
 }
 
 export const addWithdrawTransaction = async (
-  withdrawTransaction: Omit<WithdrawTransaction, "id">
+  withdrawTransaction: WithdrawTransaction
 ) => {
   await addDoc(collection(db, collectionType.TRANSACTIONS), withdrawTransaction)
 }
