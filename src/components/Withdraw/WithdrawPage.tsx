@@ -3,6 +3,8 @@ import {
   Box,
   Button,
   CircularProgress,
+  Dialog,
+  DialogTitle,
   IconButton,
   Snackbar,
   Typography,
@@ -18,6 +20,7 @@ import { BodyContainer } from "../Layout"
 import { Datagrid } from "./Datagrid"
 import { StoreInput } from "./StoreInput"
 import RestartAltIcon from "@mui/icons-material/RestartAlt"
+import CloseIcon from "@mui/icons-material/Close"
 
 export const WithdrawPage = () => {
   const [commitStatus, setCommitStatus] = useState<
@@ -31,9 +34,14 @@ export const WithdrawPage = () => {
     reset,
   } = useWithdrawFormStore<WithdrawFormState>((state: any) => state)
   const branch = useBranchStore()
+  const [isProductsOpen, setIsProductsOpen] = useState(false)
 
   const print = () => {
     window.print()
+  }
+
+  const toggleProductsTable = () => {
+    setIsProductsOpen((s) => !s)
   }
 
   const commit = () => {
@@ -101,7 +109,7 @@ export const WithdrawPage = () => {
       </Snackbar>
       <BodyContainer>
         <Box>
-          <Typography variant='h4' gutterBottom>
+          <Typography variant='h3' gutterBottom>
             Withdrawal Form
             <IconButton onClick={reset}>
               <RestartAltIcon />
@@ -109,12 +117,31 @@ export const WithdrawPage = () => {
           </Typography>
         </Box>
         <StoreInput />
+        {/* <Dialog
+          open={isProductsOpen}
+          onClose={toggleProductsTable}
+          fullWidth
+          maxWidth='lg'
+        >
+          <DialogTitle
+            display='flex'
+            justifyContent='space-between'
+            alignItems='center'
+          >
+            Products
+            <IconButton onClick={toggleProductsTable}>
+              <CloseIcon />
+            </IconButton>
+          </DialogTitle> */}
         <Datagrid
           data={data}
           withdrawFormRows={withdrawFormRows}
           setWithdrawFormRows={setWithdrawFormRows}
+          open={isProductsOpen}
+          toggle={toggleProductsTable}
         />
-        <Box mt={3}>
+        {/* </Dialog> */}
+        <Box mt={4}>
           {commitStatus === "loading" ? (
             <CircularProgress />
           ) : (
@@ -124,7 +151,7 @@ export const WithdrawPage = () => {
                   Commit
                 </Button>
               </Box>
-              <Button variant='outlined' color='secondary' onClick={print}>
+              <Button variant='outlined' color='primary' onClick={print}>
                 Preview
               </Button>
             </>

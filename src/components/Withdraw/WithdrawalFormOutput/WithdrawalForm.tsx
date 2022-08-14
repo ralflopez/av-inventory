@@ -12,7 +12,7 @@ export const FONT_SIZES = {
   gte76: {
     heading: 15,
     body: 10,
-    items: 6.5,
+    items: 6,
     spacing: 4,
     columnPadding: 0,
   },
@@ -33,7 +33,7 @@ export const FONT_SIZES = {
   gte21: {
     heading: 17,
     body: 12,
-    items: 10,
+    items: 9,
     spacing: 4,
     columnPadding: 2,
   },
@@ -74,7 +74,7 @@ export const WithdrawalForm = () => {
         sx={{
           "@page": {
             // size: "letter",
-            margin: "2in 1in",
+            margin: "0",
           },
           "@media print": {
             display: "flex",
@@ -89,7 +89,7 @@ export const WithdrawalForm = () => {
           // bottom: 0,
           backgroundColor: "white",
           height: "11in",
-          overflow: "auto",
+          // overflow: "auto",
         }}
         p={4}
         flexDirection='column'

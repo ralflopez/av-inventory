@@ -1,4 +1,12 @@
 import {
+  Box,
+  Button,
+  Dialog,
+  DialogTitle,
+  IconButton,
+  Typography,
+} from "@mui/material"
+import {
   DataGrid,
   GridCellEditCommitParams,
   GridColDef,
@@ -12,6 +20,7 @@ import {
   WithdrawTransactionProduct,
 } from "../../firebase/types"
 import { WithdrawFormState } from "../../store/withdrawForm"
+import CloseIcon from "@mui/icons-material/Close"
 
 const columns: GridColDef[] = [
   {
@@ -75,10 +84,12 @@ interface Props {
   data: Product[]
   withdrawFormRows: WithdrawFormState["rows"]
   setWithdrawFormRows: WithdrawFormState["setRows"]
+  open: boolean
+  toggle: () => void
 }
 
 export const Datagrid = React.memo(
-  ({ data, withdrawFormRows, setWithdrawFormRows }: Props) => {
+  ({ data, withdrawFormRows, setWithdrawFormRows, open, toggle }: Props) => {
     const [rows, setRows] = useState<WithdrawTransaction["products"]>([])
 
     useEffect(() => {
@@ -118,29 +129,57 @@ export const Datagrid = React.memo(
     )
 
     return (
-      <div style={{ height: "100vh", width: "100%" }}>
-        <DataGrid
-          disableVirtualization
-          disableSelectionOnClick
-          checkboxSelection
-          rows={rows}
-          columns={columns}
-          getRowId={(row) => {
-            return row.product.id
-          }}
-          pageSize={30}
-          rowsPerPageOptions={[30]}
-          selectionModel={withdrawFormRows.map((row) => row.product.id)}
-          onSelectionModelChange={onSelectionModelChange}
-          onCellEditCommit={onCellEditCommit}
-        />
-      </div>
+      <>
+        <Box>
+          <Typography variant='subtitle1' gutterBottom>
+            Products ({withdrawFormRows.length})
+          </Typography>
+          <Button onClick={toggle} color='primary' variant='text'>
+            Select Products
+          </Button>
+        </Box>
+        <Dialog open={open} onClose={toggle} fullWidth maxWidth='lg'>
+          <DialogTitle
+            display='flex'
+            justifyContent='space-between'
+            alignItems='center'
+          >
+            Products
+            <IconButton onClick={toggle}>
+              <CloseIcon />
+            </IconButton>
+          </DialogTitle>
+          <div
+            style={{
+              height: "95vh",
+              width: "100%",
+            }}
+          >
+            <DataGrid
+              disableVirtualization
+              disableSelectionOnClick
+              checkboxSelection
+              rows={rows}
+              columns={columns}
+              getRowId={(row) => {
+                return row.product.id
+              }}
+              pageSize={30}
+              rowsPerPageOptions={[30]}
+              selectionModel={withdrawFormRows.map((row) => row.product.id)}
+              onSelectionModelChange={onSelectionModelChange}
+              onCellEditCommit={onCellEditCommit}
+            />
+          </div>
+        </Dialog>
+      </>
     )
   },
   (prevProps, nextProps) => {
     return (
       prevProps.data.length === nextProps.data.length &&
-      prevProps.withdrawFormRows.length === nextProps.withdrawFormRows.length
+      prevProps.withdrawFormRows.length === nextProps.withdrawFormRows.length &&
+      prevProps.open === nextProps.open
     )
   }
 )
