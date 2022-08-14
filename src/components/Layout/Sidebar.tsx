@@ -1,4 +1,7 @@
 import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
   Divider,
   List,
   ListItem,
@@ -9,8 +12,10 @@ import {
   Typography,
   useTheme,
 } from "@mui/material"
+import { Box } from "@mui/system"
 import { useNavigate, useLocation } from "react-router-dom"
 import { featurePages, infoPages } from "../../constants"
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore"
 
 export const Sidebar = () => {
   const navigate = useNavigate()
@@ -53,12 +58,14 @@ export const Sidebar = () => {
       </List>
       <Divider />
       <List>
-        {infoPages.map(({ name, path }) => (
+        {infoPages.map(({ name, path, Icon }) => (
           <ListItem key={name} disablePadding>
             <ListItemButton onClick={() => navigate(path)}>
-              {/* <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon> */}
+              <ListItemIcon>
+                <Icon
+                  color={location.pathname === path ? "primary" : "inherit"}
+                />
+              </ListItemIcon>
               <ListItemText
                 disableTypography
                 primary={

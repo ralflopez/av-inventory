@@ -29,6 +29,7 @@ export const useRealtimeWithdrawTransactions = () => {
           })
         }
         if (type === "modified") {
+          console.log("modified")
           setRows((currentRows) => {
             newRows = [...currentRows]
             const data = doc.data() as WithdrawTransaction
@@ -41,6 +42,7 @@ export const useRealtimeWithdrawTransactions = () => {
           })
         }
         if (type === "removed") {
+          console.log("removed")
           setRows((currentRows) => currentRows.filter((r) => r.id !== doc.id))
         }
       })
