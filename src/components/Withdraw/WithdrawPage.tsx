@@ -145,16 +145,37 @@ export const WithdrawPage = () => {
           {commitStatus === "loading" ? (
             <CircularProgress />
           ) : (
-            <>
-              <Box mr={1} component='span'>
-                <Button variant='contained' color='primary' onClick={commit}>
+            <Box>
+              <Box
+                mr={{ xs: 0, md: 1 }}
+                mb={{ xs: 1, md: 0 }}
+                component='div'
+                display={{ xs: "block", md: "inline-block" }}
+              >
+                <Button
+                  variant='contained'
+                  color='primary'
+                  fullWidth
+                  onClick={commit}
+                >
                   Commit
                 </Button>
               </Box>
-              <Button variant='outlined' color='primary' onClick={print}>
-                Preview
-              </Button>
-            </>
+              <Box
+                mr={{ xs: 0, md: 1 }}
+                component='div'
+                display={{ xs: "block", md: "inline-block" }}
+              >
+                <Button
+                  variant='outlined'
+                  color='primary'
+                  fullWidth
+                  onClick={print}
+                >
+                  Preview
+                </Button>
+              </Box>
+            </Box>
           )}
         </Box>
       </BodyContainer>

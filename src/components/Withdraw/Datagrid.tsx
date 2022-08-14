@@ -138,7 +138,7 @@ export const Datagrid = React.memo(
             Select Products
           </Button>
         </Box>
-        <Dialog open={open} onClose={toggle} fullWidth maxWidth='lg'>
+        <Dialog open={open} onClose={toggle} fullWidth maxWidth='xl'>
           <DialogTitle
             display='flex'
             justifyContent='space-between'
