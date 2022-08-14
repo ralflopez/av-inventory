@@ -14,7 +14,7 @@ import {
 } from "@mui/x-data-grid"
 import React, { useCallback, useEffect, useState } from "react"
 import {
-  Product,
+  ProductWithID,
   WithdrawTransaction,
   WithdrawTransactionProduct,
 } from "../../firebase/types"
@@ -80,7 +80,7 @@ const columns: GridColDef[] = [
 ]
 
 interface Props {
-  data: Product[]
+  data: ProductWithID[]
   withdrawFormRows: WithdrawFormState["rows"]
   setWithdrawFormRows: WithdrawFormState["setRows"]
   open: boolean

@@ -40,12 +40,16 @@ export interface EmployeeWithID extends Employee {
 
 // Product
 export interface Product {
-  id: string
   brand: string
   name: string
   packaging: string
   quantity: number
   size: string
+  // isPrinted: string
+}
+
+export interface ProductWithID extends Product {
+  id: string
 }
 
 // export interface ProductWithPublished extends Product {
@@ -61,7 +65,7 @@ export interface ProductCount {
 
 // Transaction
 export interface WithdrawTransactionProduct {
-  product: Product
+  product: ProductWithID
   free: number
   cs: number
   pck: number

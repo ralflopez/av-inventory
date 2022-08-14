@@ -11,12 +11,12 @@ import {
 import { Box } from "@mui/system"
 import { FormEvent, useState } from "react"
 import { brands } from "../../constants/products"
-import { Product } from "../../firebase/types"
+import { ProductWithID } from "../../firebase/types"
 
 interface Props {
   title: string
   toggle: () => void
-  action: (product: Product) => Promise<any>
+  action: (product: ProductWithID) => Promise<any>
   actionName: string
   id?: string
   brandInit?: string

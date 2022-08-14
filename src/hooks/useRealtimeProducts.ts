@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react"
 import { getProductsRealtime } from "../firebase/products"
-import { Product } from "../firebase/types"
+import { ProductWithID } from "../firebase/types"
 
 export const useRealtimeProducts = () => {
-  const [rows, setRows] = useState<Product[]>([])
+  const [rows, setRows] = useState<ProductWithID[]>([])
 
   useEffect(() => {
     const unsub = getProductsRealtime((snapshot) => {
-      let newRows: Product[] = []
+      let newRows: ProductWithID[] = []
 
       snapshot.docChanges().forEach(({ doc, type }) => {
         // const source = snapshot.metadata.fromCache ? "local" : "server"
