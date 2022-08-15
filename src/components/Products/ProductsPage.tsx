@@ -12,13 +12,7 @@ const columns: GridColDef[] = [
     headerName: "Brand",
     width: 200,
     renderCell(params) {
-      return (
-        <Typography
-          sx={{ color: !params.row.isPublished ? "dodgerblue" : "black" }}
-        >
-          {params.row.brand}
-        </Typography>
-      )
+      return <Typography>{params.row.brand}</Typography>
     },
   },
   { field: "name", headerName: "Name", minWidth: 250 },
