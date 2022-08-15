@@ -1,11 +1,14 @@
 import {
   addDoc,
   collection,
+  doc,
   DocumentData,
   onSnapshot,
   orderBy,
   query,
   QuerySnapshot,
+  Timestamp,
+  updateDoc,
   where,
 } from "firebase/firestore"
 import { db } from "./config"
@@ -35,4 +38,10 @@ export const addWithdrawTransaction = async (
   withdrawTransaction: WithdrawTransaction
 ) => {
   await addDoc(collection(db, collectionType.TRANSACTIONS), withdrawTransaction)
+}
+
+export const printWithdrawTransaction = async (id: string) => {
+  await updateDoc(doc(db, collectionType.TRANSACTIONS, id), {
+    last_printed: Timestamp.now(),
+  })
 }
