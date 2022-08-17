@@ -39,6 +39,7 @@ export const Sidebar = () => {
                       location.pathname === path
                         ? {
                             color: theme.palette.primary.main,
+                            fontWeight: "bold",
                           }
                         : {}
                     }
@@ -70,6 +71,7 @@ export const Sidebar = () => {
                       location.pathname === path
                         ? {
                             color: theme.palette.primary.main,
+                            fontWeight: "bold",
                           }
                         : {}
                     }
