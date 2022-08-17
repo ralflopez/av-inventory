@@ -34,10 +34,13 @@ export const getWithdrawTransactionsRealtime = (
   return () => {}
 }
 
-export const addWithdrawTransaction = async (
+export const addWithdrawTransaction = (
   withdrawTransaction: WithdrawTransaction
 ) => {
-  await addDoc(collection(db, collectionType.TRANSACTIONS), withdrawTransaction)
+  return addDoc(
+    collection(db, collectionType.TRANSACTIONS),
+    withdrawTransaction
+  )
 }
 
 export const printWithdrawTransaction = async (id: string) => {

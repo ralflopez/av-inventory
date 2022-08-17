@@ -18,11 +18,9 @@ import { Datagrid } from "./Datagrid"
 import { StoreInput } from "./StoreInput"
 import RestartAltIcon from "@mui/icons-material/RestartAlt"
 import { useState } from "react"
+import { useSnackbarStore } from "../../store/snackbarStore"
 
 export const WithdrawPage = () => {
-  const [commitStatus, setCommitStatus] = useState<
-    "success" | "failed" | "loading" | ""
-  >("")
   const data = useRealtimeProducts()
   const {
     rows: withdrawFormRows,
@@ -31,6 +29,7 @@ export const WithdrawPage = () => {
     reset,
   } = useWithdrawFormStore<WithdrawFormState>((state: any) => state)
   const branch = useBranchStore()
+  const setSnackbarState = useSnackbarStore((state) => state.setSnackbarState)
   const [isProductsOpen, setIsProductsOpen] = useState(false)
 
   const print = () => {
@@ -43,7 +42,12 @@ export const WithdrawPage = () => {
 
   const commit = () => {
     if (window.confirm(`Are you sure you want to continue`)) {
-      setCommitStatus("loading")
+      setSnackbarState({
+        message: "Uploading Withdrawal",
+        open: true,
+        severity: "info",
+      })
+
       addWithdrawTransaction({
         address: branch.address,
         contact_no: branch.contact_no,
@@ -51,43 +55,25 @@ export const WithdrawPage = () => {
         name: branch.name,
       })
         .then(() => {
-          setCommitStatus("success")
+          setSnackbarState({
+            message: "Successfuly Uploaded Withdrawal",
+            open: true,
+            severity: "success",
+          })
           reset()
         })
-        .catch(() => setCommitStatus("failed"))
+        .catch(() => {
+          setSnackbarState({
+            message: "Error Uploading Withdrawal. Try Again",
+            open: true,
+            severity: "error",
+          })
+        })
     }
   }
 
   return (
     <>
-      <Snackbar
-        open={commitStatus !== "" && commitStatus !== "loading"}
-        autoHideDuration={6000}
-        onClose={() => setCommitStatus("")}
-      >
-        <div>
-          {commitStatus === "success" && (
-            <Alert
-              onClose={() => setCommitStatus("")}
-              severity='success'
-              variant='filled'
-              sx={{ width: "100%" }}
-            >
-              Commit Successful
-            </Alert>
-          )}
-          {commitStatus === "failed" && (
-            <Alert
-              onClose={() => setCommitStatus("")}
-              severity='error'
-              variant='filled'
-              sx={{ width: "100%" }}
-            >
-              Commit Failed
-            </Alert>
-          )}
-        </div>
-      </Snackbar>
       <BodyContainer>
         <Box>
           <Typography variant='h4' gutterBottom>
@@ -106,41 +92,37 @@ export const WithdrawPage = () => {
           toggle={toggleProductsTable}
         />
         <Box mt={4}>
-          {commitStatus === "loading" ? (
-            <CircularProgress />
-          ) : (
-            <Box>
-              <Box
-                mr={{ xs: 0, md: 1 }}
-                mb={{ xs: 1, md: 0 }}
-                component='div'
-                display={{ xs: "block", md: "inline-block" }}
+          <Box>
+            <Box
+              mr={{ xs: 0, md: 1 }}
+              mb={{ xs: 1, md: 0 }}
+              component='div'
+              display={{ xs: "block", md: "inline-block" }}
+            >
+              <Button
+                variant='contained'
+                color='primary'
+                fullWidth
+                onClick={commit}
               >
-                <Button
-                  variant='contained'
-                  color='primary'
-                  fullWidth
-                  onClick={commit}
-                >
-                  Commit
-                </Button>
-              </Box>
-              <Box
-                mr={{ xs: 0, md: 1 }}
-                component='div'
-                display={{ xs: "block", md: "inline-block" }}
-              >
-                <Button
-                  variant='outlined'
-                  color='primary'
-                  fullWidth
-                  onClick={print}
-                >
-                  Preview
-                </Button>
-              </Box>
+                Commit
+              </Button>
             </Box>
-          )}
+            <Box
+              mr={{ xs: 0, md: 1 }}
+              component='div'
+              display={{ xs: "block", md: "inline-block" }}
+            >
+              <Button
+                variant='outlined'
+                color='primary'
+                fullWidth
+                onClick={print}
+              >
+                Preview
+              </Button>
+            </Box>
+          </Box>
         </Box>
       </BodyContainer>
     </>
