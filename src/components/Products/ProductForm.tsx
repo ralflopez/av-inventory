@@ -80,14 +80,14 @@ export const ProductForm = ({
           setSnackbarState({
             message: "Uploading Product Successful",
             open: true,
-            severity: "info",
+            severity: "success",
           })
         })
         .catch(() => {
           setSnackbarState({
-            message: "Uploading Product",
+            message: "Error Uploading Product. Try Again",
             open: true,
-            severity: "info",
+            severity: "error",
           })
         })
     } else {

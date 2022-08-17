@@ -3,7 +3,6 @@ import { EmployeeType, EmployeeWithID } from "../../firebase/types"
 import { Box } from "@mui/system"
 import {
   Button,
-  CircularProgress,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -12,6 +11,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material"
+import { useSnackbarStore } from "../../store/snackbarStore"
 
 interface Props {
   actionName: string
@@ -26,6 +26,8 @@ export const EmployeeForm = ({
   initialValues,
   action,
 }: Props) => {
+  const setSnackbarState = useSnackbarStore((state) => state.setSnackbarState)
+
   return (
     <Formik
       initialValues={initialValues}
@@ -41,9 +43,29 @@ export const EmployeeForm = ({
       }}
       onSubmit={async (values, { setSubmitting }) => {
         setSubmitting(true)
-        await action(values)
+
+        setSnackbarState({
+          message: "Uploading Employee",
+          open: true,
+          severity: "info",
+        })
+        action(values)
+          .then(() => {
+            setSnackbarState({
+              message: "Uploading Employee Successful",
+              open: true,
+              severity: "success",
+            })
+          })
+          .catch(() => {
+            setSnackbarState({
+              message: "Error Uploading Employee",
+              open: true,
+              severity: "error",
+            })
+          })
           .finally(() => setSubmitting(false))
-          .finally(() => toggle())
+        toggle()
       }}
     >
       {(form) => (
@@ -111,20 +133,16 @@ export const EmployeeForm = ({
           </Box>
 
           <Box mt={3}>
-            {form.isSubmitting ? (
-              <CircularProgress />
-            ) : (
-              <>
-                <Box mr={2} display='inline'>
-                  <Button variant='contained' type='submit'>
-                    {actionName}
-                  </Button>
-                </Box>
-                <Button variant='outlined' onClick={toggle}>
-                  Cancel
+            <>
+              <Box mr={2} display='inline'>
+                <Button variant='contained' type='submit'>
+                  {actionName}
                 </Button>
-              </>
-            )}
+              </Box>
+              <Button variant='outlined' onClick={toggle}>
+                Cancel
+              </Button>
+            </>
           </Box>
         </Box>
       )}
