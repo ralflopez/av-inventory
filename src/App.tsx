@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom"
 import { EmployeePage } from "./components/Employee/EmployeePage"
 import { MainAppBar } from "./components/Layout/MainAppBar"
 import { ProductsPage } from "./components/Products/ProductsPage"
+import { Snackbar } from "./components/Snackbar/Snackbar"
 import { WithdrawTransactionPage } from "./components/Transaction/Withdraw/WithdrawTransactionPage"
 import { WithdrawalForm } from "./components/Withdraw/WithdrawalFormOutput/WithdrawalForm"
 import { WithdrawPage } from "./components/Withdraw/WithdrawPage"
@@ -16,6 +17,7 @@ export default function ResponsiveDrawer() {
   return (
     <BrowserRouter>
       <WithdrawalForm />
+      <Snackbar />
       <Box
         sx={{
           display: "flex",
