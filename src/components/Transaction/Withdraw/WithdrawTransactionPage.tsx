@@ -101,7 +101,7 @@ export const WithdrawTransactionPage = () => {
     <>
       <BodyContainer>
         <Box>
-          <Typography variant='h4' gutterBottom>
+          <Typography variant='h4' gutterBottom fontWeight='bold'>
             Withdraw Transactions
           </Typography>
         </Box>

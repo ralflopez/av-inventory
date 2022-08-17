@@ -68,7 +68,7 @@ export const WithdrawPage = () => {
     <>
       <BodyContainer>
         <Box>
-          <Typography variant='h4' gutterBottom>
+          <Typography variant='h4' gutterBottom fontWeight='bold'>
             Withdrawal Form
             <IconButton onClick={reset}>
               <RestartAltIcon />
