@@ -16,7 +16,7 @@ export const useRealtimeWithdrawTransactions = () => {
           const data = doc.data() as WithdrawTransaction
           setRows((currentRows) => {
             newRows = [...currentRows]
-            newRows.push({
+            newRows.unshift({
               id: doc.id,
               ...data,
             })
