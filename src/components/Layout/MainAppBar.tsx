@@ -1,4 +1,11 @@
-import { AppBar, Box, Drawer, Toolbar, Typography } from "@mui/material"
+import {
+  AppBar,
+  Box,
+  Divider,
+  Drawer,
+  Toolbar,
+  Typography,
+} from "@mui/material"
 import { useState } from "react"
 import { drawerWidth } from "../../constants/appbar"
 import MenuIcon from "@mui/icons-material/Menu"
@@ -15,6 +22,7 @@ export const MainAppBar = () => {
   return (
     <>
       <AppBar
+        color='primary'
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
@@ -38,6 +46,7 @@ export const MainAppBar = () => {
             Altrosof Ventures
           </Typography>
         </Toolbar>
+        <Divider />
       </AppBar>
 
       <Box
