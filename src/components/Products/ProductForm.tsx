@@ -1,6 +1,5 @@
 import {
   Button,
-  CircularProgress,
   FormControl,
   InputLabel,
   MenuItem,
@@ -12,6 +11,7 @@ import { Box } from "@mui/system"
 import { FormEvent, useState } from "react"
 import { brands } from "../../constants/products"
 import { ProductWithID } from "../../firebase/types"
+import { useSnackbarStore } from "../../store/snackbarStore"
 
 interface Props {
   title: string
@@ -46,11 +46,17 @@ export const ProductForm = ({
     packaging: false,
     size: false,
   })
-  const [loading, setLoading] = useState(false)
+  const setSnackbarState = useSnackbarStore((state) => state.setSnackbarState)
 
   const submit = async (e: FormEvent) => {
     e.preventDefault()
-    setLoading(true)
+
+    setSnackbarState({
+      message: "Uploading Product",
+      open: true,
+      severity: "info",
+    })
+
     const newErrors = { ...errors }
     newErrors.brand = !brand
     newErrors.name = !name
@@ -58,7 +64,7 @@ export const ProductForm = ({
     newErrors.packaging = !packaging
 
     if (!newErrors.brand && !newErrors.name && !newErrors.packaging) {
-      await action({
+      action({
         brand,
         name,
         packaging,
@@ -66,16 +72,28 @@ export const ProductForm = ({
         id,
         quantity: 0,
       })
-      setBrand("")
-      setName("")
-      setSize("")
-      setPackaging("")
-      toggle()
+        .then(() => {
+          setBrand("")
+          setName("")
+          setSize("")
+          setPackaging("")
+          setSnackbarState({
+            message: "Uploading Product Successful",
+            open: true,
+            severity: "info",
+          })
+        })
+        .catch(() => {
+          setSnackbarState({
+            message: "Uploading Product",
+            open: true,
+            severity: "info",
+          })
+        })
     } else {
       setErrors(newErrors)
     }
-
-    setLoading(false)
+    toggle()
   }
 
   return (
@@ -144,20 +162,16 @@ export const ProductForm = ({
       </Box>
 
       <Box mt={3}>
-        {loading ? (
-          <CircularProgress />
-        ) : (
-          <>
-            <Box mr={2} display='inline'>
-              <Button variant='contained' type='submit'>
-                {actionName}
-              </Button>
-            </Box>
-            <Button variant='outlined' onClick={toggle}>
-              Cancel
+        <>
+          <Box mr={2} display='inline'>
+            <Button variant='contained' type='submit'>
+              {actionName}
             </Button>
-          </>
-        )}
+          </Box>
+          <Button variant='outlined' onClick={toggle}>
+            Cancel
+          </Button>
+        </>
       </Box>
     </Box>
   )
