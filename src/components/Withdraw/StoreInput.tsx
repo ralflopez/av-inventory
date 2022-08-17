@@ -44,7 +44,7 @@ export const StoreInput = () => {
 
   return (
     <Box mt={2}>
-      <Typography variant='subtitle1' gutterBottom>
+      <Typography variant='h6' gutterBottom fontWeight='regular'>
         Store Information
       </Typography>
       <Box mb={2} mt={1}>
@@ -85,7 +85,7 @@ export const StoreInput = () => {
           />
         </Box>
       </Box>
-      <Typography variant='subtitle1' gutterBottom>
+      <Typography variant='h6' gutterBottom fontWeight='regular'>
         Additional Info
       </Typography>
       <Box
@@ -104,7 +104,7 @@ export const StoreInput = () => {
           onChange={(e) => setPoNo(e.target.value)}
         />
       </Box>
-      <Typography variant='subtitle1' gutterBottom>
+      <Typography variant='h6' gutterBottom fontWeight='regular'>
         Person In Charge
       </Typography>
       <Box>

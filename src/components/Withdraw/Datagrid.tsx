@@ -129,7 +129,7 @@ export const Datagrid = React.memo(
     return (
       <>
         <Box>
-          <Typography variant='subtitle1' gutterBottom>
+          <Typography variant='h6' gutterBottom fontWeight='regular'>
             Products ({withdrawFormRows.length})
           </Typography>
           <Button onClick={toggle} color='primary' variant='text'>
