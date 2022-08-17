@@ -46,7 +46,6 @@ export const MainAppBar = () => {
             Altrosof Ventures
           </Typography>
         </Toolbar>
-        <Divider />
       </AppBar>
 
       <Box
