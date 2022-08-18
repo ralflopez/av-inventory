@@ -1,10 +1,13 @@
 import { Box, Button, Typography } from "@mui/material"
 import { DataGrid, GridColDef } from "@mui/x-data-grid"
 import { Timestamp } from "firebase/firestore"
+import { useEffect } from "react"
 import { printWithdrawTransaction } from "../../../firebase/transaction"
 import { Employee, Store } from "../../../firebase/types"
+import { usePrintModeStore } from "../../../hooks/usePrintMode"
 import { useRealtimeWithdrawTransactions } from "../../../hooks/useRealtimeWithdrawTransactions"
 import { BodyContainer } from "../../Layout"
+import { WithdrawalForm } from "../../Withdraw/WithdrawalFormOutput/WithdrawalForm"
 
 const columns: GridColDef[] = [
   {
@@ -96,6 +99,14 @@ const columns: GridColDef[] = [
 
 export const WithdrawTransactionPage = () => {
   const rows = useRealtimeWithdrawTransactions()
+  const printModeStore = usePrintModeStore()
+
+  useEffect(() => {
+    printModeStore.setComponent(WithdrawalForm)
+    return () => {
+      printModeStore.reset()
+    }
+  }, [printModeStore.Component])
 
   return (
     <>
