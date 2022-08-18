@@ -9,8 +9,10 @@ import { BodyContainer } from "../Layout"
 import { Datagrid } from "./Datagrid"
 import { StoreInput } from "./StoreInput"
 import RestartAltIcon from "@mui/icons-material/RestartAlt"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useSnackbarStore } from "../../store/snackbarStore"
+import { usePrintModeStore } from "../../hooks/usePrintMode"
+import { WithdrawalForm } from "./WithdrawalFormOutput/WithdrawalForm"
 
 export const WithdrawPage = () => {
   const data = useRealtimeProducts()
@@ -22,7 +24,15 @@ export const WithdrawPage = () => {
   } = useWithdrawFormStore<WithdrawFormState>((state: any) => state)
   const branch = useBranchStore()
   const setSnackbarState = useSnackbarStore((state) => state.setSnackbarState)
+  const printModeStore = usePrintModeStore()
   const [isProductsOpen, setIsProductsOpen] = useState(false)
+
+  useEffect(() => {
+    printModeStore.setComponent(WithdrawalForm)
+    return () => {
+      printModeStore.reset()
+    }
+  }, [printModeStore.Component])
 
   const print = () => {
     window.print()

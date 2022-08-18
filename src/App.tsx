@@ -14,6 +14,7 @@ import { WithdrawTransactionPage } from "./components/Transaction/Withdraw/Withd
 import { WithdrawalForm } from "./components/Withdraw/WithdrawalFormOutput/WithdrawalForm"
 import { WithdrawPage } from "./components/Withdraw/WithdrawPage"
 import shadows, { Shadows } from "@mui/material/styles/shadows"
+import { PrintModeComponent } from "./components/Layout/Print/PrintModeComponent"
 
 const theme = createTheme({
   shadows: Array(shadows.length).fill("none") as Shadows,
@@ -23,7 +24,8 @@ export default function ResponsiveDrawer() {
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <WithdrawalForm />
+        {/* <WithdrawalForm /> */}
+        <PrintModeComponent />
         <Snackbar />
         <Box
           sx={{
