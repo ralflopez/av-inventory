@@ -16,18 +16,33 @@ export const Sidebar = () => {
   const navigate = useNavigate()
   const location = useLocation()
   const theme = useTheme()
+  const activeBg = theme.palette.primary.dark
+  const inactiveBg = 'inherit'
+  const activeText = theme.palette.primary.contrastText
+  const inactiveText = '#ffffffB4'
 
   return (
     <div>
-      <Toolbar />
+      <Toolbar sx={{paddingTop: theme.spacing(2), paddingBottom: theme.spacing(2)}}>
+        <Typography color={activeText} variant="body1" component="div">Altrosof Ventures</Typography>
+      </Toolbar>
       <Divider />
       <List>
-        {featurePages.map(({ name, Icon, path }) => (
-          <ListItem key={name} disablePadding>
+        {featurePages.map(({ name, Icon, path }) => {
+          const isActive = location.pathname === path
+          const bgColor = isActive ? activeBg : inactiveBg
+          const textColor = isActive ? activeText : inactiveText
+
+          return (
+          <ListItem key={name} disablePadding sx={{
+              backgroundColor: bgColor
+            }}>
             <ListItemButton onClick={() => navigate(path)}>
               <ListItemIcon>
                 <Icon
-                  color={location.pathname === path ? "primary" : "inherit"}
+                  sx={{
+                    color: textColor
+                  }}
                 />
               </ListItemIcon>
               <ListItemText
@@ -35,14 +50,10 @@ export const Sidebar = () => {
                 primary={
                   <Typography
                     variant='body2'
-                    style={
-                      location.pathname === path
-                        ? {
-                            color: theme.palette.primary.main,
-                            fontWeight: "bold",
-                          }
-                        : {}
-                    }
+                    style={{
+                      color: textColor,
+                      fontWeight: isActive ? 'bold' : ''
+                    }}
                   >
                     {name}
                   </Typography>
@@ -50,16 +61,25 @@ export const Sidebar = () => {
               />
             </ListItemButton>
           </ListItem>
-        ))}
+        )})}
       </List>
       <Divider />
       <List>
-        {infoPages.map(({ name, path, Icon }) => (
-          <ListItem key={name} disablePadding>
+        {infoPages.map(({ name, path, Icon }) => {
+          const isActive = location.pathname === path
+          const bgColor = isActive ? activeBg : inactiveBg
+          const textColor = isActive ? activeText : inactiveText
+
+          return (
+          <ListItem key={name} disablePadding sx={{
+            backgroundColor: bgColor
+          }}>
             <ListItemButton onClick={() => navigate(path)}>
               <ListItemIcon>
                 <Icon
-                  color={location.pathname === path ? "primary" : "inherit"}
+                  sx={{
+                    color: textColor
+                  }}
                 />
               </ListItemIcon>
               <ListItemText
@@ -67,14 +87,10 @@ export const Sidebar = () => {
                 primary={
                   <Typography
                     variant='body2'
-                    style={
-                      location.pathname === path
-                        ? {
-                            color: theme.palette.primary.main,
-                            fontWeight: "bold",
-                          }
-                        : {}
-                    }
+                    style={{
+                      color: textColor,
+                      fontWeight: isActive ? 'bold' : ''
+                    }}
                   >
                     {name}
                   </Typography>
@@ -82,7 +98,7 @@ export const Sidebar = () => {
               />
             </ListItemButton>
           </ListItem>
-        ))}
+      )})}
       </List>
     </div>
   )

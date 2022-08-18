@@ -5,6 +5,7 @@ import {
   Drawer,
   Toolbar,
   Typography,
+  useTheme,
 } from "@mui/material"
 import { useState } from "react"
 import { drawerWidth } from "../../constants/appbar"
@@ -14,6 +15,7 @@ import { Sidebar } from "./Sidebar"
 
 export const MainAppBar = () => {
   const [mobileOpen, setMobileOpen] = useState(false)
+  const theme = useTheme()
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen)
@@ -30,6 +32,9 @@ export const MainAppBar = () => {
             xs: "fixed",
             sm: "absolute",
           },
+          display: {
+            sm: 'none'
+          }
         }}
       >
         <Toolbar>
@@ -42,7 +47,7 @@ export const MainAppBar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant='h6' noWrap component='div'>
+          <Typography variant='h6' component='div'>
             Altrosof Ventures
           </Typography>
         </Toolbar>
@@ -65,6 +70,7 @@ export const MainAppBar = () => {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor: theme.palette.primary.main
             },
           }}
         >
@@ -77,6 +83,7 @@ export const MainAppBar = () => {
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
               width: drawerWidth,
+              backgroundColor: theme.palette.primary.main
             },
           }}
           open
