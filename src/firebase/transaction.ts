@@ -24,7 +24,7 @@ export const getWithdrawTransactionsRealtime = (
       query(
         collection(db, collectionType.TRANSACTIONS),
         where("type", "==", TransactionType.WITHDRAW),
-        orderBy("timestamp", "desc")
+        orderBy("timestamp", "asc")
       ),
       (collection) => callback(collection)
     )
