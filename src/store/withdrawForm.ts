@@ -9,13 +9,17 @@ import {
   EmployeeType,
 } from "../firebase/types"
 
-export interface WithdrawFormState {
+export interface WithdrawFormStateProperties {
   storeName: string
   storeAddress: string
   salesman: EmployeeWithID
   warehouseInCharge: EmployeeWithID
   poNo: string
   rows: WithdrawTransactionProduct[]
+}
+
+export interface WithdrawFormState extends WithdrawFormStateProperties{
+  setState: (properties: WithdrawFormStateProperties) => void
   reset: () => void
   setStoreName: (name: string) => void
   setStoreAddress: (address: string) => void
@@ -43,6 +47,15 @@ export const useWithdrawFormStore = create<WithdrawFormState>((set, get) => ({
   },
   poNo: "",
   rows: [],
+  setState: ({ poNo, rows, salesman, storeAddress, storeName, warehouseInCharge }: WithdrawFormStateProperties) => set((state) => ({
+    ...state,
+    poNo,
+    rows,
+    salesman,
+    storeAddress,
+    storeName,
+    warehouseInCharge
+  })),
   reset: () =>
     set((state) => ({
       ...state,
