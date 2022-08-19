@@ -59,18 +59,7 @@ export const WithdrawTransactionPage = () => {
       renderCell(params) {
         if (!params.row.last_printed) {
           return (
-            <Button
-              color='primary'
-              variant='text'
-              onClick={async () => {
-                if (
-                  window.confirm("Are you sure you want to mark this as printed?")
-                )
-                  await printWithdrawTransaction(params.row.id)
-              }}
-            >
-              <Typography variant='body2'>Mark as Printed</Typography>
-            </Button>
+            <Typography variant='body2'>-</Typography>
           )
         }
         const ts: Timestamp = params.row.timestamp
@@ -84,7 +73,7 @@ export const WithdrawTransactionPage = () => {
     },
     {
       field: "products",
-      headerName: "Products",
+      headerName: "Details",
       width: 150,
       sortable: false,
       renderCell(params) {
