@@ -1,9 +1,8 @@
-import { Toolbar, useTheme } from "@mui/material"
 import { Box } from "@mui/system"
 import { drawerWidth } from "../../constants"
+import { Appbar } from "./Appbar"
 
 export const BodyContainer = ({ children }: any) => {
-  const theme = useTheme()
 
   return (
     <Box
@@ -12,12 +11,13 @@ export const BodyContainer = ({ children }: any) => {
         flexGrow: 1,
         p: 3,
         width: { sm: `calc(100% - ${drawerWidth}px)` },
-        paddingTop: { sm: theme.spacing(5) },
-        paddingBottom: theme.spacing(5)
+        padding: 0,
       }}
     >
-      <Toolbar sx={{display: {sm: 'none'}}} />
-      {children}
+      <Appbar />
+      <Box pt={2} pb={5} pl={3} pr={3}>
+        {children}
+      </Box>
     </Box>
   )
 }
