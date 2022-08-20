@@ -1,12 +1,21 @@
 import { Typography } from "@mui/material"
 import { Box } from "@mui/system"
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { useWithdrawFormStore } from "../../../store/withdrawForm"
 import { FontSizeContext } from "./WithdrawalForm"
 
 export const Footer = () => {
   const font = useContext(FontSizeContext)
-  const { salesman, warehouseInCharge } = useWithdrawFormStore((state) => state)
+  const { salesman, warehouseInCharge, rows } = useWithdrawFormStore((state) => state)
+
+  let free = 0
+  let cs = 0
+  let pck = 0
+  rows.forEach((row) => {
+    free += row.free
+    cs += row.cs
+    pck += row.pck
+  })
 
   return (
     <Box mt={`${font.spacing * 2}pt`}>
@@ -14,9 +23,9 @@ export const Footer = () => {
         <Typography fontWeight='bold' fontSize={`${font.body}pt`}>
           Total
         </Typography>
-        <Typography fontSize={`${font.body}pt`}>FREE: 0</Typography>
-        <Typography fontSize={`${font.body}pt`}>CS: 0</Typography>
-        <Typography fontSize={`${font.body}pt`}>PCK: 0</Typography>
+        <Typography fontSize={`${font.body}pt`}>FREE: {free}</Typography>
+        <Typography fontSize={`${font.body}pt`}>CS: {cs}</Typography>
+        <Typography fontSize={`${font.body}pt`}>PCK: {pck}</Typography>
       </Box>
       <Box display='flex' justifyContent='space-between'>
         <Box>
