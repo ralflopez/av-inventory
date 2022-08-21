@@ -9,9 +9,9 @@ export const Total = () => {
   let pck = 0;
 
   rows.forEach((row) => {
-    free += row.free;
-    cs += row.cs;
-    pck += row.pck;
+    free += Number(row.free) || 0;
+    cs += Number(row.cs) || 0;
+    pck += Number(row.pck) || 0;
   });
 
   return <TableRow type="heading" title="TOTAL" cols={[free, cs, pck]} />;
