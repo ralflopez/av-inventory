@@ -1,80 +1,104 @@
-import { Box } from "@mui/system"
-import React, { useEffect, useState } from "react"
+import { grey } from "@mui/material/colors";
+import { Box } from "@mui/system";
+import React, { useEffect, useState } from "react";
+import { WithdrawTransactionProduct } from "../../../firebase/types";
 import {
   useWithdrawFormStore,
   WithdrawFormState,
-} from "../../../store/withdrawForm"
-import { Body } from "./Body"
-import { Footer } from "./Footer"
-import { Header } from "./Header"
+} from "../../../store/withdrawForm";
+import { Body } from "./Body";
+import { Footer } from "./Footer";
+import { Header } from "./Header";
 
-export const FONT_SIZES = {
-  gte76: {
-    heading: 15,
-    body: 10,
-    items: 6,
-    spacing: 4,
-    columnPadding: 0,
-  },
-  gte70: {
-    heading: 15,
-    body: 9,
-    items: 7,
-    spacing: 4,
-    columnPadding: 0,
-  },
-  gte52: {
-    heading: 15,
-    body: 10,
-    items: 8,
-    spacing: 4,
-    columnPadding: 1,
-  },
-  gte21: {
-    heading: 17,
-    body: 12,
-    items: 9,
-    spacing: 4,
-    columnPadding: 2,
-  },
-  gte1: {
-    heading: 19,
-    body: 14,
-    items: 12,
-    spacing: 4,
-    columnPadding: 2,
-  },
+export interface FormatedRow {
+  title: string;
+  free: string | number;
+  cs: string | number;
+  pck: string | number;
+  type: "heading" | "row";
 }
 
-export const FontSizeContext = React.createContext(FONT_SIZES["gte1"])
+export const FontSizeContext = React.createContext({
+  heading: 15,
+  body: 10,
+  items: 10,
+  spacing: 4,
+  columnPadding: 8,
+});
 
 export const WithdrawalForm = () => {
   const rows = useWithdrawFormStore<WithdrawFormState["rows"]>(
     (state) => state.rows
-  )
-  const [font, setFont] = useState(FONT_SIZES["gte1"])
+  );
+  const [formatedRows, setFormatedRows] = useState<FormatedRow[]>([]);
+
+  const [font, setFont] = useState({
+    heading: 15,
+    body: 10,
+    items: 10,
+    spacing: 4,
+    columnPadding: 8,
+  });
 
   useEffect(() => {
-    if (rows.length >= 76) {
-      setFont(FONT_SIZES["gte76"])
-    } else if (rows.length >= 70) {
-      setFont(FONT_SIZES["gte70"])
-    } else if (rows.length >= 52) {
-      setFont(FONT_SIZES["gte52"])
-    } else if (rows.length >= 21) {
-      setFont(FONT_SIZES["gte21"])
+    console.log("rows");
+    console.log(formatedRows);
+    const brands: Record<string, WithdrawTransactionProduct[]> = {};
+    rows.forEach((row) => {
+      const key = row.product.brand;
+      if (brands[key]) brands[key].push(row);
+      else brands[key] = [row];
+    });
+
+    const formatedRowsCpy: FormatedRow[] = [];
+    Object.keys(brands).forEach((brand) => {
+      formatedRowsCpy.push({
+        cs: "CS",
+        free: "FREE",
+        pck: "PCK",
+        title: brand,
+        type: "heading",
+      });
+
+      brands[brand].forEach(({ cs, free, pck, product }) => {
+        formatedRowsCpy.push({
+          cs,
+          free,
+          pck,
+          title: product.name + " " + product.size + " " + product.packaging,
+          type: "row",
+        });
+      });
+    });
+
+    setFormatedRows(formatedRowsCpy);
+  }, [rows]);
+
+  useEffect(() => {
+    if (rows.length <= 35) {
+      setFont({ ...font, items: 10, columnPadding: 8 });
+    } else if (rows.length <= 37) {
+      setFont({ ...font, items: 9, columnPadding: 8 });
+    } else if (rows.length <= 76) {
+      setFont({ ...font, items: 8, columnPadding: 8 });
+    } else if (rows.length <= 84) {
+      setFont({ ...font, items: 7, columnPadding: 8 });
+    } else if (rows.length <= 94) {
+      setFont({ ...font, items: 7, columnPadding: 6 });
+    } else if (rows.length <= 116) {
+      setFont({ ...font, items: 6, columnPadding: 4 });
     } else {
-      setFont(FONT_SIZES["gte1"])
+      setFont({ ...font, items: 6, columnPadding: 2 });
     }
-  }, [rows])
+  }, [rows]);
 
   return (
     <FontSizeContext.Provider value={font}>
       <Box
         sx={{
           "@page": {
-            // size: "letter",
-            margin: "0",
+            size: "legal",
+            margin: 0,
           },
           "@media print": {
             display: "flex",
@@ -88,17 +112,40 @@ export const WithdrawalForm = () => {
           // top: 0,
           // bottom: 0,
           backgroundColor: "white",
-          height: "11in",
+          height: "14in",
+          // width: '8.5in',
           // overflow: "auto",
         }}
         p={4}
-        flexDirection='column'
-        justifyContent='space-between'
+        flexDirection="column"
+        justifyContent="space-between"
       >
-        <Header />
-        <Body />
-        <Footer />
+        <Box padding="0.3in" paddingBottom={0}>
+          <Header />
+        </Box>
+        <Box
+          margin="0.3in"
+          my={0}
+          borderBottom={`1.2pt solid ${grey["300"]}`}
+        ></Box>
+        <Box
+          display="flex"
+          flexDirection="column"
+          flexGrow={0}
+          flexWrap="wrap"
+          flexBasis="100%"
+          minHeight={0}
+          minWidth={0}
+          padding="0.3in"
+          paddingTop={0}
+          paddingBottom={0}
+        >
+          <Body rows={formatedRows} />
+        </Box>
+        <Box padding="0.3in" paddingTop={0}>
+          <Footer />
+        </Box>
       </Box>
     </FontSizeContext.Provider>
-  )
-}
+  );
+};
