@@ -11,11 +11,12 @@ import AlternateEmailIcon from "@mui/icons-material/AlternateEmail";
 import { BranchInfo } from "./BranchInfo";
 import { FontSizeContext } from "./WithdrawalForm";
 import { grey } from "@mui/material/colors";
+import { getDate } from "../../../constants/utils";
 
 export const Header = () => {
   const font = useContext(FontSizeContext);
   const branch = useBranchStore<BranchState>((state) => state);
-  const { poNo, storeName, storeAddress, salesman, rows } =
+  const { poNo, storeName, storeAddress, salesman } =
     useWithdrawFormStore<WithdrawFormState>((state) => state);
 
   return (
@@ -79,7 +80,7 @@ export const Header = () => {
         <Grid container>
           {[
             { title: "Name", value: storeName },
-            { title: "Date", value: "" },
+            { title: "Date", value: getDate() },
             { title: "Address", value: storeAddress },
             {
               title: "Salesman",

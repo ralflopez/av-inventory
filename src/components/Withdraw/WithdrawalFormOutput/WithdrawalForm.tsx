@@ -41,8 +41,6 @@ export const WithdrawalForm = () => {
   });
 
   useEffect(() => {
-    console.log("rows");
-    console.log(formatedRows);
     const brands: Record<string, WithdrawTransactionProduct[]> = {};
     rows.forEach((row) => {
       const key = row.product.brand;
