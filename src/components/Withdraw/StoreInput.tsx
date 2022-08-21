@@ -6,15 +6,15 @@ import {
   RadioGroup,
   TextField,
   Typography,
-} from "@mui/material"
-import { Box } from "@mui/system"
-import { useEffect } from "react"
-import { EmployeeType } from "../../firebase/types"
-import { useRealtimeEmployees } from "../../hooks/useRealtimeEmployees"
+} from "@mui/material";
+import { Box } from "@mui/system";
+import { useEffect } from "react";
+import { EmployeeType } from "../../firebase/types";
+import { useRealtimeEmployees } from "../../hooks/useRealtimeEmployees";
 import {
   useWithdrawFormStore,
   WithdrawFormState,
-} from "../../store/withdrawForm"
+} from "../../store/withdrawForm";
 
 export const StoreInput = () => {
   const {
@@ -28,23 +28,24 @@ export const StoreInput = () => {
     setSalesman,
     setWarehouseInCharge,
     setPoNo,
-  } = useWithdrawFormStore<WithdrawFormState>((state) => state)
-  const employees = useRealtimeEmployees()
+  } = useWithdrawFormStore<WithdrawFormState>((state) => state);
+  const employees = useRealtimeEmployees();
 
   useEffect(() => {
     const initialSalesman = employees.find(
       (e) => e.type === EmployeeType.SALESMAN
-    )
-    if (initialSalesman) setSalesman(initialSalesman)
+    );
+    if (initialSalesman) setSalesman(initialSalesman);
     const initialWarehouseInCharge = employees.find(
       (e) => e.type === EmployeeType.WAREHOUSE_IN_CHARGE
-    )
-    if (initialWarehouseInCharge) setWarehouseInCharge(initialWarehouseInCharge)
-  }, [employees, setSalesman, setWarehouseInCharge])
+    );
+    if (initialWarehouseInCharge)
+      setWarehouseInCharge(initialWarehouseInCharge);
+  }, [employees, setSalesman, setWarehouseInCharge]);
 
   return (
     <Box mt={2}>
-      <Typography variant='h6' gutterBottom fontWeight='regular'>
+      <Typography variant="h6" gutterBottom fontWeight="regular">
         Store Information
       </Typography>
       <Box mb={2} mt={1}>
@@ -53,17 +54,17 @@ export const StoreInput = () => {
           mb={2}
           display={{
             sm: "block",
-            // md: "inline-block",
           }}
           sx={{ flex: 1 }}
-          width='100%'
+          width="100%"
         >
           <TextField
             fullWidth
-            variant='outlined'
+            variant="outlined"
             value={storeName}
-            label='Name of Store'
+            label="Name of Store"
             onChange={(e) => setStoreName(e.target.value)}
+            autoComplete="new-password"
           />
         </Box>
         <Box
@@ -71,21 +72,21 @@ export const StoreInput = () => {
           mb={3}
           display={{
             sm: "block",
-            // md: "inline-block",
           }}
           sx={{ flex: 1 }}
-          width='100%'
+          width="100%"
         >
           <TextField
-            variant='outlined'
+            variant="outlined"
             fullWidth
             value={storeAddress}
-            label='Address'
+            label="Address"
             onChange={(e) => setStoreAddress(e.target.value)}
+            autoComplete="new-password"
           />
         </Box>
       </Box>
-      <Typography variant='h6' gutterBottom fontWeight='regular'>
+      <Typography variant="h6" gutterBottom fontWeight="regular">
         Additional Info
       </Typography>
       <Box
@@ -93,18 +94,18 @@ export const StoreInput = () => {
         mb={2}
         display={{
           sm: "block",
-          // md: "inline-block",
         }}
       >
         <TextField
-          variant='outlined'
+          variant="outlined"
           fullWidth
           value={poNo}
-          label='PO #'
+          label="PO #"
           onChange={(e) => setPoNo(e.target.value)}
+          autoComplete="new-password"
         />
       </Box>
-      <Typography variant='h6' gutterBottom fontWeight='regular'>
+      <Typography variant="h6" gutterBottom fontWeight="regular">
         Person In Charge
       </Typography>
       <Box>
@@ -113,22 +114,21 @@ export const StoreInput = () => {
           mb={3}
           display={{
             sm: "block",
-            // md: "inline-block",
           }}
           flex={1}
         >
-          <FormControl fullWidth variant='outlined'>
-            <FormLabel id='salesman-label'>Salesman</FormLabel>
+          <FormControl fullWidth variant="outlined">
+            <FormLabel id="salesman-label">Salesman</FormLabel>
             <RadioGroup
               row
-              id='salesman'
-              name='salesman'
+              id="salesman"
+              name="salesman"
               value={salesman.id}
               onChange={(e) => {
                 const salesman = employees.find(
                   (employee) => employee.id === e.target.value
-                )
-                if (salesman) setSalesman(salesman)
+                );
+                if (salesman) setSalesman(salesman);
               }}
             >
               {employees
@@ -149,23 +149,21 @@ export const StoreInput = () => {
           mb={2}
           display={{
             sm: "block",
-            // md: "inline-block",
           }}
           flex={1}
         >
-          <FormControl fullWidth variant='outlined'>
+          <FormControl fullWidth variant="outlined">
             <FormLabel>Warehouse In Charge</FormLabel>
             <RadioGroup
               row
-              id='warehouse-in-charge'
-              name='warehouse-in-charge'
+              id="warehouse-in-charge"
+              name="warehouse-in-charge"
               value={warehouseInCharge.id}
-              // label='Warehouse In Charge'
               onChange={(e) => {
                 const salesman = employees.find(
                   (employee) => employee.id === e.target.value
-                )
-                if (salesman) setWarehouseInCharge(salesman)
+                );
+                if (salesman) setWarehouseInCharge(salesman);
               }}
             >
               {employees
@@ -183,5 +181,5 @@ export const StoreInput = () => {
         </Box>
       </Box>
     </Box>
-  )
-}
+  );
+};
